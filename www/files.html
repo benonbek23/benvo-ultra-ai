@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BenvoGodUltra34 Hosting</title>
+<style>
+body{font-family:Arial;background:#0f172a;color:white;margin:0;padding:20px}
+h1{text-align:center;color:#38bdf8}
+.box{background:#1e293b;padding:20px;border-radius:12px;max-width:600px;margin:20px auto}
+input,button{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:none}
+button{background:#38bdf8;color:#000;font-weight:bold;cursor:pointer}
+button:hover{background:#0ea5e9}
+.file{background:#334155;padding:10px;margin:8px 0;border-radius:8px;display:flex;justify-content:space-between;align-items:center}
+a{color:#38bdf8;text-decoration:none}
+#status{margin:10px 0;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>🔥 BenvoGodUltra34 Hosting 🔥</h1>
+<p style="text-align:center">By Benon Katugunda - Maaya Mubende</p>
+<div class="box">
+<h3>Upload File</h3>
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">Upload</button>
+<div id="status"></div>
+</div>
+<div class="box">
+<h3>Your Files</h3>
+<div id="fileList">Loading...</div>
+<button onclick="loadFiles()">Refresh</button>
+</div>
+<script>
+async function uploadFile(){
+ const input=document.getElementById('fileInput');
+ const status=document.getElementById('status');
+ if(!input.files[0]){status.innerText='Select file first!';return;}
+ status.innerText='Uploading...';
+ const fd=new FormData();
+ fd.append('file',input.files[0]);
+ const res=await fetch('/upload',{method:'POST',body:fd});
+ const data=await res.json();
+ if(data.success){status.innerText='✅ Uploaded: '+data.original;loadFiles();}
+ else status.innerText='❌ Failed';
+}
+async function loadFiles(){
+ const res=await fetch('/files');
+ const files=await res.json();
+ const list=document.getElementById('fileList');
+ if(files.length==0) list.innerHTML='No files yet';
+ else list.innerHTML=files.map(f=>`<div class="file"><span>${f.name} (${(f.size/1024).toFixed(1)} KB)</span><a href="${f.url}" target="_blank" download>Download</a></div>`).join('');
+}
+loadFiles();
+</script>
+</body>
+</html>

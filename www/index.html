@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benvo ultra Ai</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:white;min-height:100vh;display:flex;flex-direction:column}
+header{background:rgba(0,0,0,0.3);padding:15px;text-align:center;border-bottom:2px solid #00f2ff}
+header h1{font-size:22px;color:#00f2ff;letter-spacing:1px}
+header p{font-size:12px;opacity:0.8;margin-top:4px}
+#chat{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:85%;padding:12px 15px;border-radius:18px;font-size:14px;line-height:1.4}
+.user{background:#00f2ff;color:#000;align-self:flex-end;border-bottom-right-radius:4px}
+.bot{background:rgba(255,255,255,0.12);border:1px solid rgba(0,242,255,0.3);align-self:flex-start;border-bottom-left-radius:4px}
+#inputArea{display:flex;padding:12px;background:rgba(0,0,0,0.4);gap:8px}
+#userInput{flex:1;padding:12px;border-radius:25px;border:none;outline:none;background:rgba(255,255,255,0.9);color:#000}
+#sendBtn{background:#00f2ff;color:#000;border:none;padding:12px 20px;border-radius:25px;font-weight:bold;cursor:pointer}
+footer{text-align:center;padding:8px;font-size:10px;opacity:0.5}
+</style>
+</head>
+<body>
+<header>
+<h1>Benvo ultra Ai</h1>
+<p>God Ultra 34 Brain | By Benon Katugunda | Maaya Lubimbiri Kasambya Mubende Uganda</p>
+</header>
+<div id="chat">
+<div class="msg bot">Hello! Am Benvo ultra Ai — God Ultra 34 Brain — Created by Benon Katugunda from Maaya Lubimbiri Kasambya Mubende Uganda 🇺🇬<br><br>Ask me anything! I am ready!</div>
+</div>
+<div id="inputArea">
+<input id="userInput" placeholder="Ask Benvo ultra Ai..." />
+<button id="sendBtn" onclick="send()">SEND</button>
+</div>
+<footer>© 2026 Benon Katugunda | Benvo ultra Ai | Maaya to World</footer>
+<script>
+const chat = document.getElementById('chat');
+const input = document.getElementById('userInput');
+function send(){
+  let text = input.value.trim();
+  if(!text) return;
+  addMsg(text,'user');
+  input.value='';
+  setTimeout(()=>{
+    let reply = getReply(text);
+    addMsg(reply,'bot');
+  },600);
+}
+function addMsg(text,cls){
+  let div=document.createElement('div');
+  div.className='msg '+cls;
+  div.innerText=text;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+}
+function getReply(q){
+  q=q.toLowerCase();
+  if(q.includes('who are you')) return "Am Benvo ultra Ai - God Ultra 34 Brain created by Benon Katugunda from Maaya Lubimbiri Kasambya Mubende, Mubende District, Uganda. I am here to help you!";
+  if(q.includes('creator')||q.includes('made you')) return "I was created by Benon Katugunda - A visionary from Maaya Lubimbiri Kasambya Mubende Uganda 🇺🇬";
+  if(q.includes('mubende')||q.includes('maaya')) return "Maaya Lubimbiri Kasambya is in Mubende District, Uganda - Home of Benvo ultra Ai! From village to world technology!";
+  if(q.includes('uganda')) return "Uganda is the Pearl of Africa! And Mubende is where Benvo ultra Ai was born!";
+  return "Benvo ultra Ai God Ultra 34 Brain: You asked '"+q+"'. This is my smart answer: I understand your question and I'm ready to help! In full version with internet API, I will give deeper answers. For now - God Ultra 34 is working offline! Ask me about Benon, Maaya, or Mubende!";
+}
+input.addEventListener('keypress',e=>{if(e.key==='Enter') send()});
+</script>
+</body>
+</html>
