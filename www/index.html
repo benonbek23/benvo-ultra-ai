@@ -1,77 +1,165 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Benvo Ultra 34 AI</title><style>body{background:#0a1931;color:#fff;font-family:Arial;margin:0;text-align:center}.top{padding:16px;background:linear-gradient(135deg,#00f2ff15,#00ff8815);border-bottom:2px solid #00f2ff44}.card{background:#112240;border:2px solid #00f2ff44;border-radius:14px;padding:12px;margin:12px auto;max-width:600px}#chat{height:38vh;overflow-y:auto;padding:8px;background:#0a1931;border-radius:10px;margin:8px 0;border:1px solid #00f2ff22;text-align:left}.msg{margin:6px;padding:10px;border-radius:14px;max-width:84%;font-size:13px;word-break:break-word}.user{background:linear-gradient(135deg,#00f2ff,#00ff88);color:#000;margin-left:auto}.bot{background:#1e3a5f}.msg img{width:100%;border-radius:10px;margin-top:6px;border:1px solid #00f2ff44}#row{display:flex;gap:5px;flex-wrap:wrap}#msgInput{flex:1;min-width:120px;padding:14px;border-radius:25px;border:1px solid #00f2ff33;background:#0a1931;color:#fff}.iconBtn{padding:12px 14px;border-radius:25px;border:none;font-weight:900;cursor:pointer;font-size:14px}#callBtn{flex:1;min-width:90px;padding:14px;border-radius:25px;border:none;font-weight:900;background:linear-gradient(135deg,#00ff88,#00f2ff);color:#000}#sendBtn{background:#00f2ff;color:#000}#camBtn{background:#ffaa00;color:#000}#fileBtn{background:#8a2be2;color:#fff}#videoWrap{display:none;margin:8px 0}#videoWrap video{width:100%;border-radius:12px;border:2px solid #00f2ff55;background:#000}#videoWrap canvas{display:none}</style></head><body>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BENVO ULTRA 34 - PRO DEMO</title>
+<style>
+body{background:#0a1931;color:white;font-family:Arial;margin:0}
+#intro{padding:12px;text-align:center;background:linear-gradient(135deg,#00f2ff11,#00ff8811);border-bottom:2px solid #00f2ff44}
+.badge{background:#00f2ff22;border:1px solid #00f2ff;color:#00f2ff;padding:4px 10px;border-radius:20px;font-size:10px;margin:3px;display:inline-block}
+.video-box{background:#112240;border:2px solid #00f2ff33;border-radius:16px;padding:12px;margin:12px auto;max-width:560px}
+video,img{width:100%;border-radius:12px;border:2px solid #00f2ff44;background:black;max-height:300px;object-fit:cover}
+.photo-drop{border:2px dashed #00f2ff;padding:20px;border-radius:15px;text-align:center;margin:10px;cursor:pointer;background:#00f2ff11}
+.photo-drop:hover{background:#00f2ff22}
+.story{font-size:12px;color:#ddd;background:#0a1931aa;padding:10px;border-radius:10px;margin-top:8px;line-height:1.6;text-align:left}
+.btn{padding:10px 14px;border-radius:25px;border:none;font-weight:bold;cursor:pointer;margin:4px;font-size:12px}
+#chat{height:32vh;overflow-y:auto;padding:10px;margin:10px;background:#112240;border-radius:15px}
+.msg{margin:8px;padding:11px;border-radius:15px;max-width:85%;font-size:13px}
+.user{background:linear-gradient(135deg,#00f2ff,#00ff88);color:black;margin-left:auto}
+.bot{background:#1e3a5f}
+#row{display:flex;gap:6px;padding:0 10px}
+#msgInput{flex:1;padding:13px;border-radius:25px;border:2px solid #00f2ff33;background:#0a1931;color:white}
+#callBtn{flex:1;background:linear-gradient(135deg,#00ff88,#00f2ff);color:black;padding:14px;border-radius:25px;border:none;font-weight:bold}
+#callBtn.active{background:red;color:white;animation:pulse 1s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}}100%{transform:scale(1)}}
+#sendBtn{background:#00f2ff;padding:13px;border-radius:25px;border:none;font-weight:bold}
+</style>
+</head>
+<body>
 
-<div class="top">
-<h1 style="color:#00f2ff;margin:0;letter-spacing:2px">Benvo Ultra 34 AI</h1>
-<p style="color:#00ff88;font-size:12px;margin:6px 0;font-weight:bold">| Benon K | Maaya Lubimbiri Kasambya Mubende Uganda | From Dust to the World |</p>
-<p style="color:#aaa;font-size:10px">Based in Mubende District, Uganda 🇺🇬 | Camera + File Upload Enabled</p>
+<div id="intro">
+<h1 style="color:#00f2ff;text-shadow:0 0 15px #00f2ff">🚀 BENVO ULTRA 34 — GOD BRAIN</h1>
+<p style="color:#00ff88;font-size:12px">By Benon Katugunda | Maaya Lubimbiri, Mubende Uganda 🇺🇬 | Village to World</p>
+
+<!-- DROP YOUR PHOTO HERE -->
+<div class="photo-drop" onclick="document.getElementById('myPhoto').click()">
+<div style="font-size:40px">📸</div>
+<b>DROP YOUR PHOTO HERE TO BE THE DEMO PERSON</b><br>
+<span style="font-size:11px;color:#aaa">Tap to upload — your face will appear in both intro videos as professional presenter in computer lab</span><br>
+<img id="previewPhoto" style="display:none;margin:10px auto;max-width:160px;border-radius:50%;border:3px solid #00f2ff;aspect-ratio:1">
+<input type="file" id="myPhoto" accept="image/*" style="display:none">
+<div id="photoStatus" style="font-size:11px;color:#00ff88;margin-top:6px"></div>
 </div>
 
-<div class="card">
-<div id="videoWrap"><video id="camVideo" autoplay playsinline></video><canvas id="camCanvas"></canvas><div style="display:flex;gap:6px;margin-top:6px"><button class="iconBtn" style="flex:1;background:#00ff88;color:#000" onclick="takePhoto()">📸 Take Photo</button><button class="iconBtn" style="flex:1;background:#ff4444;color:#fff" onclick="closeCamera()">❌ Close Camera</button></div></div>
+<div>
+<span class="badge">📍 Maaya Lubimbiri</span>
+<span class="badge">🎬 Professional Demo</span>
+<span class="badge">⚡ Groq 20B</span>
+<span class="badge">📞 Infinite Call</span>
+</div>
+</div>
+
+<!-- VIDEO 1 PRO -->
+<div class="video-box">
+<h3 style="color:#00f2ff">🎬 VIDEO 1: HOW I MADE IT — Professional Lab Demo</h3>
+<video id="vid1" controls playsinline poster="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600"></video>
+<canvas id="can1" width="640" height="360" style="display:none"></canvas>
+<div>
+<button class="btn" style="background:#00f2ff" onclick="playProDemo(1)">▶️ PLAY PRO DEMO WITH MY PHOTO</button>
+<button class="btn" style="background:#00ff88" onclick="document.getElementById('vidFile1').click()">📤 Upload Real Lab Video</button>
+<input type="file" id="vidFile1" accept="video/*" style="display:none">
+</div>
+<div class="story">
+<b>Professional Script — How I Made It (with your photo demo):</b><br>
+"Hello, I am Benon Katugunda from Maaya Lubimbiri village, Mubende. In this computer lab [shows my photo in lab coat with laptop], I built Benvo Ultra 34 with no big funding — just phone, Vercel, Groq API openai/gpt-oss-20b for fastest brain, Tavily live search, Web Speech API. [demo: screen recording of coding api/chat.js]. I solved hallucination bug that was saying Thomas More. Now it remembers context, speaks, infinite call. Proof that village innovation can beat ChatGPT."
+</div>
+</div>
+
+<!-- VIDEO 2 PRO -->
+<div class="video-box">
+<h3 style="color:#00ff88">⚙️ VIDEO 2: HOW IT WORKS — Live Tech Demo</h3>
+<video id="vid2" controls playsinline poster="https://images.unsplash.com/photo-1555099962-4199c345e5b?w=600"></video>
+<canvas id="can2" width="640" height="360" style="display:none"></canvas>
+<div>
+<button class="btn" style="background:#00f2ff" onclick="playProDemo(2)">▶️ PLAY HOW IT WORKS DEMO</button>
+<button class="btn" style="background:#00ff88" onclick="document.getElementById('vidFile2').click()">📤 Upload Screen Demo</button>
+<input type="file" id="vidFile2" accept="video/*" style="display:none">
+</div>
+<div class="story">
+<b>Script — How It Works (demo):</b><br>
+"Watch: [shows phone screen] User taps START INFINITE CALL → getUserMedia asks mic permission → SpeechRecognition continuous true listens forever → silence 1.4s auto sends to /api/chat → Groq replies in 0.8s → speechSynthesis speaks → onend triggers restartMic → loop continues until you tap END. Memory via localStorage. No cut, true phone call."
+</div>
+</div>
+
 <div id="chat"></div>
 <div id="row">
-<button id="callBtn">📞 CALL</button>
-<button class="iconBtn" id="camBtn" onclick="openCamera()">📷 CAMERA</button>
-<button class="iconBtn" id="fileBtn" onclick="document.getElementById('fileInput').click()">📁 UPLOAD</button>
-<input type="file" id="fileInput" hidden accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.txt" multiple onchange="handleFiles(this.files)">
-<input id="msgInput" placeholder="Talk, upload, or camera...">
-<button class="iconBtn" id="sendBtn">SEND</button>
+<button id="callBtn">📞 START INFINITE CALL</button>
+<input id="msgInput" placeholder="Talk...">
+<button id="sendBtn">SEND</button>
 </div>
-<div id="status" style="color:#00ff88;font-size:11px;margin-top:8px">✅ Camera + Upload ready — Tap CAMERA to open, UPLOAD to send files</div>
-<input type="file" id="hiddenCamInput" hidden accept="image/*" capture="environment">
-</div>
+<div id="status" style="text-align:center;color:#00ff88;font-size:12px;margin:8px">Drop your photo above to make pro demo videos</div>
 
 <script>
-let chatHistory=JSON.parse(localStorage.getItem('benvo34_history')||'[]'),callActive=false,recognition,stream=null;
-const chatDiv=document.getElementById('chat'),inputEl=document.getElementById('msgInput'),callBtn=document.getElementById('callBtn'),videoWrap=document.getElementById('videoWrap'),camVideo=document.getElementById('camVideo'),camCanvas=document.getElementById('camCanvas');
+let myPhotoData=null;
+document.getElementById('myPhoto').onchange=(e)=>{
+ let f=e.target.files[0];if(!f)return;
+ let r=new FileReader();
+ r.onload=()=>{
+  myPhotoData=r.result;
+  let img=document.getElementById('previewPhoto');
+  img.src=myPhotoData;img.style.display='block';
+  document.getElementById('photoStatus').innerText='✅ Photo loaded! Now tap PLAY PRO DEMO — you will appear in lab demo!';
+  localStorage.setItem('benvo_myphoto',myPhotoData);
+  generateProPoster(1);generateProPoster(2);
+ };
+ r.readAsDataURL(f);
+};
+let saved=localStorage.getItem('benvo_myphoto');
+if(saved){myPhotoData=saved;let img=document.getElementById('previewPhoto');img.src=saved;img.style.display='block';document.getElementById('photoStatus').innerText='✅ Your photo restored — ready for pro demo!';}
 
-function render(){chatDiv.innerHTML='';chatHistory.forEach(m=>{let d=document.createElement('div');d.className='msg '+(m.role==='user'?'user':'bot');if(m.image){let img=document.createElement('img');img.src=m.image;d.appendChild(document.createElement('div')).innerText=m.content; if(m.content)d.firstChild.innerText=m.content; d.appendChild(img);}else d.innerText=m.content;chatDiv.appendChild(d)});chatDiv.scrollTop=chatDiv.scrollHeight}render();
-function save(){localStorage.setItem('benvo34_history',JSON.stringify(chatHistory))}
-
-async function openCamera(){
- try{
-  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
-  camVideo.srcObject=stream;videoWrap.style.display='block';document.getElementById('status').innerText='📷 Camera open — Tap Take Photo';
- }catch(e){ // fallback to file capture for mobile
-  document.getElementById('hiddenCamInput').click();
-  document.getElementById('status').innerText='📷 Opening camera app...';
- }
-}
-function closeCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());}videoWrap.style.display='none';document.getElementById('status').innerText='Camera closed';}
-function takePhoto(){
- const ctx=camCanvas.getContext('2d');camCanvas.width=camVideo.videoWidth;camCanvas.height=camVideo.videoHeight;ctx.drawImage(camVideo,0,0);
- let dataUrl=camCanvas.toDataURL('image/jpeg',0.8);
- chatHistory.push({role:'user',content:'📷 Photo taken from camera',image:dataUrl});save();render();closeCamera();
- sendToAI('I took a photo from camera — analyze this image: [photo attached]',dataUrl);
-}
-
-function handleFiles(files){
- for(let file of files){
-  let reader=new FileReader();
-  reader.onload=function(e){
-   let isImage=file.type.startsWith('image/');
-   chatHistory.push({role:'user',content:'📁 Uploaded: '+file.name+' ('+Math.round(file.size/1024)+'KB)',image:isImage?e.target.result:null});save();render();
-   sendToAI('Uploaded file: '+file.name+' — please analyze',isImage?e.target.result:null);
+function generateProPoster(n){
+ if(!myPhotoData)return;
+ let can=document.getElementById('can'+n);let ctx=can.getContext('2d');
+ let bg=new Image();bg.crossOrigin='anonymous';
+ bg.src=n==1?'https://images.unsplash.com/photo-1518770660439-4636190af475?w=640':'https://images.unsplash.com/photo-1555099962-4199c345e5b?w=640';
+ bg.onload=()=>{
+  ctx.drawImage(bg,0,0,640,360);
+  ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(0,0,640,360);
+  let person=new Image();person.src=myPhotoData;
+  person.onload=()=>{
+   // draw person circle in lab
+   ctx.save();ctx.beginPath();ctx.arc(120,180,70,0,Math.PI*2);ctx.clip();
+   ctx.drawImage(person,50,110,140,140);ctx.restore();
+   ctx.strokeStyle='#00f2ff';ctx.lineWidth=4;ctx.beginPath();ctx.arc(120,180,70,0,Math.PI*2);ctx.stroke();
+   ctx.fillStyle='#00f2ff';ctx.font='bold 22px Arial';ctx.fillText(n==1?'HOW I MADE BENVO ULTRA 34':'HOW IT WORKS - INFINITE CALL',200,40);
+   ctx.fillStyle='white';ctx.font='14px Arial';ctx.fillText('By Benon Katugunda - Maaya Lubimbiri',200,65);
+   ctx.fillText(n==1?'Built in village lab with Groq 20B':'Demo: mic → Groq → voice → loop forever',200,85);
+   let url=can.toDataURL();
+   document.getElementById('vid'+n).poster=url;
   };
-  if(file.type.startsWith('image/')) reader.readAsDataURL(file);
-  else reader.readAsDataURL(file);
- }
+ };
 }
-document.getElementById('hiddenCamInput').onchange=function(){handleFiles(this.files);};
 
-async function send(t,img=null){if(!t.trim()&&!img)return;if(t.trim()){chatHistory.push({role:'user',content:t,image:img});save();render();inputEl.value='';await sendToAI(t,img);}}
-async function sendToAI(t,img){
- try{
-  let r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:t,history:chatHistory.slice(-10),image:img})});
-  let d=await r.json();chatHistory.push({role:'assistant',content:d.reply});save();render();
-  let u=new SpeechSynthesisUtterance(d.reply);u.onstart=function(){try{recognition.stop()}catch(e){}};u.onend=function(){if(callActive)restartMic();};speechSynthesis.speak(u);
- }catch(e){document.getElementById('status').innerText='Offline — saved locally';}
+function playProDemo(n){
+ if(!myPhotoData){alert('First drop your photo at top! Tap the 📸 box');return;}
+ let text=n==1
+? "Hello, I am Benon Katugunda from Maaya Lubimbiri village, Kasambya, Mubende, Uganda. In this computer lab, with just my phone and laptop, I built Benvo Ultra 34 God Brain. I used Vercel for hosting, Groq openai gpt oss 20b for fastest brain, Tavily for live search, and Web Speech API for infinite voice call. I fixed hallucination bug, added memory, made call that never ends until you get tired. This is village innovation beating ChatGPT."
+ : "How Benvo Ultra works: You tap start infinite call. Browser requests microphone permission via getUserMedia. Speech recognition with continuous true listens without 2 second cut. After 1.4 seconds silence, it auto sends to Groq API which replies in less than one second. Then text to speech speaks the answer. When speech ends, microphone auto restarts. Loop continues forever until you tap end call. Memory saved in local storage. This is true phone call mode.";
+ let u=new SpeechSynthesisUtterance(text);u.rate=0.92;u.lang='en-US';
+ document.getElementById('status').innerText='🔊 Pro demo playing with your photo as presenter...';
+ speechSynthesis.speak(u);
+ // animate canvas to video
+ let can=document.getElementById('can'+n);let vid=document.getElementById('vid'+n);
+ if(can){let stream=can.captureStream(25);vid.srcObject=stream;vid.play();setTimeout(()=>{vid.srcObject=null;generateProPoster(n);},8000);}
 }
-function restartMic(){if(!callActive)return;setTimeout(function(){try{recognition.start();}catch(e){setTimeout(restartMic,500)}},700);}
+
+document.getElementById('vidFile1').onchange=(e)=>{let f=e.target.files[0];if(!f)return;document.getElementById('vid1').src=URL.createObjectURL(f);document.getElementById('vid1').play();};
+document.getElementById('vidFile2').onchange=(e)=>{let f=e.target.files[0];if(!f)return;document.getElementById('vid2').src=URL.createObjectURL(f);document.getElementById('vid2').play();};
+
+// CHAT + INFINITE CALL (same as before)
+let chatHistory=JSON.parse(localStorage.getItem('benvo34_history')||'[]');let callActive=false,recognition;
+const chatDiv=document.getElementById('chat'),statusEl=document.getElementById('status'),inputEl=document.getElementById('msgInput'),callBtn=document.getElementById('callBtn');
+function render(){chatDiv.innerHTML='';chatHistory.forEach(m=>{let d=document.createElement('div');d.className='msg '+(m.role==='user'?'user':'bot');d.innerText=m.content;chatDiv.appendChild(d)});chatDiv.scrollTop=chatDiv.scrollHeight}render();
+function save(){localStorage.setItem('benvo34_history',JSON.stringify(chatHistory))}
+async function send(t){if(!t.trim())return;chatHistory.push({role:'user',content:t});save();render();inputEl.value='';statusEl.innerText='🧠 Thinking...';try{let r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:t,history:chatHistory.slice(-8)})});let d=await r.json();chatHistory.push({role:'assistant',content:d.reply});save();render();speak(d.reply);}catch(e){statusEl.innerText='Error';if(callActive)restartMic();}}
+function speak(txt){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=0.95;u.onstart=()=>{try{recognition.stop()}catch(e){}};u.onend=()=>{if(callActive)restartMic();};speechSynthesis.speak(u);}
+function restartMic(){if(!callActive)return;setTimeout(()=>{try{recognition.start();}catch(e){setTimeout(restartMic,500)}},700);}
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(SR){recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;let timer;recognition.onresult=function(e){clearTimeout(timer);let fin='',inter='';for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';else inter+=e.results[i][0].transcript;}inputEl.value=fin+inter;timer=setTimeout(function(){let s=(fin||inter).trim();if(s.length>1){try{recognition.stop()}catch(e){}let txt=inputEl.value;inputEl.value='';send(txt);}},1400);};recognition.onend=function(){if(callActive&&!speechSynthesis.speaking)restartMic();};}
-callBtn.onclick=async function(){if(!callActive){try{await navigator.mediaDevices.getUserMedia({audio:true});}catch(err){alert('Allow mic');return;}callActive=true;callBtn.innerText='🔴 END';try{recognition.start();}catch(e){restartMic();}}else{callActive=false;callBtn.innerText='📞 CALL';try{recognition.stop();}catch(e){}speechSynthesis.cancel();}};
-document.getElementById('sendBtn').onclick=function(){send(inputEl.value);};
-inputEl.onkeypress=function(e){if(e.key==='Enter')send(e.target.value);};
-</script></body></html>
+if(SR){recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;let timer;recognition.onresult=(e)=>{clearTimeout(timer);let fin='',inter='';for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';else inter+=e.results[i][0].transcript;}inputEl.value=fin+inter;timer=setTimeout(()=>{let s=(fin||inter).trim();if(s.length>1){try{recognition.stop()}catch(e){}inputEl.value='';send(s);}},1400);};recognition.onend=()=>{if(callActive&&!speechSynthesis.speaking)restartMic();};}
+callBtn.onclick=async()=>{if(!callActive){try{await navigator.mediaDevices.getUserMedia({audio:true});}catch(err){alert('Allow mic: Tap 🔒 → Allow');return;}callActive=true;callBtn.classList.add('active');callBtn.innerText='🔴 END CALL';try{recognition.start();}catch(e){restartMic();}}else{callActive=false;callBtn.classList.remove('active');callBtn.innerText='📞 START INFINITE CALL';try{recognition.stop();}catch(e){}speechSynthesis.cancel();}};
+document.getElementById('sendBtn').onclick=()=>send(inputEl.value);
+inputEl.onkeypress=(e)=>{if(e.key==='Enter')send(e.target.value)};
+</script>
+</body>
+</html>
