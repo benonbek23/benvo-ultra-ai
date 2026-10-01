@@ -1,134 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Benvo Ultra 34 - God Brain</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body{background:#0a1931;color:white;font-family:Arial;margin:0;padding:10px}
-#chat{height:70vh;overflow-y:auto;padding:10px;background:#112240;border-radius:10px}
-.msg{margin:10px;padding:12px;border-radius:12px;max-width:85%}
-.user{background:#00f2ff;color:black;margin-left:auto;text-align:right}
-.bot{background:#1e3a5f}
-#inputRow{display:flex;gap:5px;margin-top:10px;align-items:center}
-input{flex:1;padding:15px;border-radius:25px;border:none}
-button{padding:12px 18px;border-radius:25px;border:none;font-weight:bold;cursor:pointer}
-#voiceBtn{background:#222;color:white;font-size:22px;width:55px;height:55px;border-radius:50%;border:2px solid #00f2ff}
-#voiceBtn.listening{background:red;animation:pulse 1s infinite}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
-#speakToggle{width:45px;height:45px;background:#333}
-#speakToggle.on{background:#00ff88;color:black}
-</style>
-</head>
-<body>
-<h2>🚀 BENVO ULTRA 34 - GOD BRAIN</h2>
-<div style="font-size:12px;color:#888">Founder: Benon Katugunda | Maaya Lubimbiri Mubende UG</div>
-<div id="chat"></div>
-<div id="inputRow">
-<button id="voiceBtn">🎤</button>
-<input id="msgInput" placeholder="Tap mic to talk like ChatGPT...">
-<button id="sendBtn" style="background:#00f2ff">SEND</button>
-<button id="speakToggle" class="on" title="Voice ON/OFF">🔊</button>
-<button id="exportBtn" style="background:#333;color:white;font-size:12px">💾</button>
+<div id="intro">
+<h1>🚀 BENVO ULTRA 34 - GOD BRAIN</h1>
+<h2>Created by Benon Katugunda 🇺🇬 | Maaya Lubimbiri, Mubende</h2>
+
+<!-- INTRO VIDEO - YOUR VIDEO HERE -->
+<video id="introVideo" controls autoplay muted loop playsinline style="width:100%;max-width:500px;border-radius:15px;margin:10px auto;display:block;border:2px solid #00f2ff;box-shadow:0 0 20px #00f2ff44">
+<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+Your browser no video
+</video>
+<div style="margin:5px">
+<button onclick="document.getElementById('introVideo').play()" style="background:#00f2ff;padding:6px 12px;border-radius:10px;border:none;font-size:12px">▶️ PLAY INTRO</button>
+<button onclick="document.getElementById('ytVideoIn').click()" style="background:#00ff88;padding:6px 12px;border-radius:10px;border:none;font-size:12px">📤 UPLOAD YOUR INTRO VIDEO</button>
 </div>
-<div id="status" style="text-align:center;font-size:12px;color:#00f2ff;height:15px"></div>
 
-<script>
-let chatHistory = JSON.parse(localStorage.getItem('benvo34_history') || '[]');
-let voiceOn = localStorage.getItem('benvo_voice_on')!== 'false';
-const chatDiv = document.getElementById('chat');
-const status = document.getElementById('status');
-const speakToggle = document.getElementById('speakToggle');
-speakToggle.className = voiceOn? 'on' : '';
-speakToggle.innerText = voiceOn? '🔊' : '🔇';
-
-function render(){
- chatDiv.innerHTML='';
- chatHistory.forEach(m=>{
-  const d=document.createElement('div');
-  d.className='msg '+(m.role==='user'?'user':'bot');
-  d.innerText=m.content;
-  chatDiv.appendChild(d);
- });
- chatDiv.scrollTop=chatDiv.scrollHeight;
-}
-render();
-function save(){ localStorage.setItem('benvo34_history', JSON.stringify(chatHistory)); }
-
-speakToggle.onclick=()=>{
- voiceOn =!voiceOn;
- localStorage.setItem('benvo_voice_on', voiceOn);
- speakToggle.className = voiceOn? 'on' : '';
- speakToggle.innerText = voiceOn? '🔊' : '🔇';
- if(!voiceOn) speechSynthesis.cancel();
- status.innerText = voiceOn? 'Voice ON' : 'Voice OFF - text only';
-};
-
-async function send(text){
- if(!text.trim()) return;
- chatHistory.push({role:'user', content:text});
- save(); render();
- document.getElementById('msgInput').value='';
- status.innerText='Benvo 34 thinking...';
-
- const res = await fetch('/api/chat', {
-  method:'POST',
-  headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({message:text, history:chatHistory.slice(-8)})
- });
- const data = await res.json();
- chatHistory.push({role:'assistant', content:data.reply});
- save(); render();
- status.innerText='';
-
- // ONLY SPEAK IF USER ALLOWED (with consent)
- if(voiceOn){
-   speechSynthesis.cancel();
-   const utter = new SpeechSynthesisUtterance(data.reply);
-   utter.lang='en-UG';
-   utter.rate=1;
-   utter.onend=()=>{ status.innerText='Tap 🎤 to reply'; };
-   speechSynthesis.speak(utter);
- }
-}
-
-document.getElementById('sendBtn').onclick=()=>send(document.getElementById('msgInput').value);
-document.getElementById('msgInput').onkeypress=(e)=>{if(e.key==='Enter')send(e.target.value)};
-document.getElementById('exportBtn').onclick=()=>{
- const blob=new Blob([JSON.stringify(chatHistory,null,2)],{type:'application/json'});
- const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
- a.download='benvo-full-history.json'; a.click();
-};
-
-// --- CHATGPT LIKE VOICE ---
-const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-let recognition;
-if(SpeechRec){
- recognition=new SpeechRec();
- recognition.lang='en-UG';
- recognition.interimResults=false;
- recognition.continuous=false;
-
- recognition.onstart=()=>{
-  document.getElementById('voiceBtn').classList.add('listening');
-  status.innerText='Listening... speak now';
- };
- recognition.onend=()=>{
-  document.getElementById('voiceBtn').classList.remove('listening');
-  status.innerText='';
- };
- recognition.onresult=(e)=>{
-  const text=e.results[0][0].transcript;
-  document.getElementById('msgInput').value=text;
-  send(text); // auto send like ChatGPT voice
- };
- recognition.onerror=()=>{ status.innerText='Mic error - allow microphone'; };
-
- document.getElementById('voiceBtn').onclick=()=>{
-   try{ speechSynthesis.cancel(); recognition.start(); }catch(err){}
- };
-} else {
- status.innerText='Voice not supported - use Chrome';
-}
-</script>
-</body>
-</html>
+<div>
+<span class="badge">📍 Maaya Lubimbiri, Kasambya</span>
+<span class="badge">⚡ Groq 20B</span>
+<span class="badge">📞 Infinite Call</span>
+<span class="badge">🎬 Intro Video</span>
+</div>
+<p>World's fastest village-built AI — Voice-to-Voice infinite call until you get tired.<br>Tap START INFINITE CALL below — no 2 sec cut!</p>
+</div>
