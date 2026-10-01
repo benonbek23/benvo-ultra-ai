@@ -1,140 +1,134 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>Benvo Ultra 34 AI</title>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Benvo Ultra 34 Ai</title>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-*{box-sizing:border-box}body{background:#0a1931;color:#fff;font-family:Arial;margin:0;overflow-x:hidden}
-.top{padding:10px 12px;border-bottom:2px solid #00f2ff44;display:flex;gap:10px;align-items:center;position:sticky;top:0;background:#0a1931;z-index:5}
-.logo{width:46px;height:46px;min-width:46px;background:#1a22ff;border-radius:13px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;box-shadow:0 0 12px #00f2ff88;position:relative;flex-shrink:0}.logo::before{content:"";position:absolute;width:34px;height:34px;border:3px solid #fff;border-radius:50%;border-left-color:transparent;transform:rotate(-30deg)}.logo span{z-index:2}
-.topInfo{flex:1;min-width:0;text-align:left}.topInfo h1{color:#00f2ff;margin:0;font-size:17px}.topInfo p{color:#00ff88;font-size:8px;margin:2px 0}
-.langToggle{width:42px;height:42px;border-radius:50%;border:1px solid #00f2ff66;background:#112240;color:#fff;font-size:16px;cursor:pointer}
-.langPanel{display:none;position:absolute;top:60px;left:0;right:0;background:#0a1931;border-bottom:2px solid #00f2ff44;padding:10px;z-index:6;flex-wrap:wrap;gap:6px}.langPanel.show{display:flex}
-.langChip{width:42px;height:42px;border-radius:50%;border:1px solid #00f2ff44;background:#112240;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}.langChip.active{background:#00f2ff;color:#000}
-.card{background:#112240;border:2px solid #00f2ff44;border-radius:14px;padding:8px;margin:6px auto;width:100%}@media(min-width:640px){.card{max-width:700px}}
-#chat{height:68vh;height:68dvh;overflow-y:auto;background:#0a1931;border-radius:12px;padding:10px;text-align:left;border:1px solid #00f2ff22}
-.msg{margin:8px 0;padding:12px 14px;border-radius:18px;max-width:92%;font-size:13.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word}.user{background:#00f2ff;color:#000;margin-left:auto}.bot{background:#1e3a5f}
-.assessBox{background:#001122;border:1px solid #00f2ff33;border-radius:10px;padding:8px;margin:6px 0;text-align:left;font-size:11px;display:none}
-#row{display:flex;gap:6px;align-items:center;margin-top:10px;position:relative}
-#msgInput{flex:1;padding:15px 18px;border-radius:28px;border:1px solid #00f2ff33;background:#000;color:#fff;font-size:16px;min-width:0;outline:none}
-.iconTab{width:46px;height:46px;min-width:46px;border-radius:50%;border:none;background:linear-gradient(135deg,#00f2ff,#00ff88);color:#000;font-size:18px;font-weight:900;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-#sendBtn{width:46px;height:46px;min-width:46px;border-radius:50%;border:none;background:#00f2ff;color:#000;font-weight:900;cursor:pointer}
-#popMenu{display:none;position:absolute;bottom:58px;left:0;background:#0a1931;border:2px solid #00f2ff44;border-radius:14px;padding:8px;z-index:10;min-width:60px;max-height:68vh;overflow-y:auto}
-.popItem{width:46px;height:46px;border:none;background:#112240;color:#fff;border-radius:50%;margin:6px 0;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-#vidBox{display:none}#vidBox video{width:100%;border-radius:12px}
-#editModal,#cvModal,#transModal,#downModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000f;z-index:100;overflow-y:auto;padding:8px}
-#editBox,#cvBox,#transBox,#downBox{background:#0f1f3f;border:2px solid #00f2ff;border-radius:14px;padding:12px;margin:8px auto;max-width:98%;width:98%}
-#canWrap{position:relative;width:100%;background:#000;border-radius:10px;overflow:hidden}#editCanvas,#bgCanvas{width:100%;display:block}
-.toolRow{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.toolBtn{width:46px;height:46px;border-radius:50%;border:none;background:#1e3a5f;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.cvInput{width:100%;padding:11px;border-radius:10px;border:1px solid #00f2ff33;background:#000;color:#fff;margin:4px 0;font-size:13px}
-.cvTextarea{width:100%;min-height:85px;padding:11px;border-radius:10px;border:1px solid #00f2ff33;background:#000;color:#fff;margin:4px 0;font-size:13px}
-#cvOutput,#transOutput{width:100%;min-height:110px;background:#fff;color:#000;border-radius:10px;padding:14px;font-size:12.5px;white-space:pre-wrap;text-align:left}
-.transSelect{padding:10px;border-radius:10px;border:1px solid #00f2ff33;background:#000;color:#fff;font-size:13px;flex:1}
-.downItem{display:flex;gap:8px;align-items:center;background:#112240;border:1px solid #00f2ff22;border-radius:30px;padding:8px 10px;margin:6px 0}
-.micPulse{animation:pulse 1s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 #00f2ff88}70%{box-shadow:0 0 0 12px #00f2ff00}100%{box-shadow:0 0 0 0 #00f2ff00}}
-.footer{padding:8px;text-align:center;font-size:11px;color:#00ff88;letter-spacing:0.5px}
+*{box-sizing:border-box}body{margin:0;background:#0a1931;color:#fff;font-family:Arial}
+.top{display:flex;align-items:center;gap:8px;padding:10px;background:#0a1931;border-bottom:2px solid #00f2ff55;position:sticky;top:0;z-index:20}
+.logo{width:44px;height:44px;background:#1a22ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px}
+.card{max-width:720px;margin:6px auto;padding:8px;background:#112240;border-radius:14px;border:2px solid #00f2ff33}
+#brainBar{display:flex;gap:4px;overflow-x:auto;padding:6px;background:#001122;border-radius:8px;margin-bottom:6px;border:1px solid #00f2ff22}
+.brain{padding:4px 8px;border-radius:12px;background:#112240;border:1px solid #00f2ff22;font-size:8px;white-space:nowrap;flex-shrink:0}.brain.active{background:#00ff88;color:#000;font-weight:900}
+#chat{height:62vh;height:62dvh;overflow-y:auto;padding:10px;background:#0a1931;border-radius:12px;border:1px solid #00f2ff22;display:flex;flex-direction:column;gap:8px}
+.msg{padding:12px 14px;border-radius:18px;max-width:85%;white-space:pre-wrap;word-break:break-word;font-size:13.5px;line-height:1.6}
+.user{background:#00f2ff;color:#000;align-self:flex-end}.bot{background:#1e3a5f;align-self:flex-start;border:1px solid #00f2ff22}
+#row{display:flex;gap:6px;margin-top:10px;position:relative}
+#msgInput{flex:1;padding:15px;border-radius:28px;border:1px solid #00f2ff33;background:#000;color:#fff;font-size:16px;outline:none}
+.icon{width:46px;height:46px;min-width:46px;border-radius:50%;border:none;background:linear-gradient(135deg,#00f2ff,#00ff88);color:#000;font-size:18px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#pop{display:none;position:absolute;bottom:56px;left:0;background:#0a1931;border:2px solid #00f2ff55;border-radius:14px;padding:8px;z-index:30;width:62px}
+.popBtn{width:46px;height:46px;border-radius:50%;border:none;background:#112240;color:#fff;font-size:20px;margin:5px 0;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.langPanel{display:none;position:absolute;top:60px;left:0;right:0;background:#0a1931;padding:10px;gap:8px;flex-wrap:wrap;z-index:25;border-bottom:2px solid #00f2ff33}.langPanel.show{display:flex}
+.lang{width:44px;height:44px;border-radius:50%;border:1px solid #00f2ff44;background:#112240;font-size:18px;cursor:pointer}.lang.active{background:#00f2ff;color:#000}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000e;z-index:100;overflow:auto;padding:8px}
+.box{background:#0f1f3f;border:2px solid #00f2ff;border-radius:14px;padding:12px;margin:10px auto;max-width:700px}
+#canWrap{position:relative;background:#000;border-radius:10px;overflow:hidden}#editCanvas,#bgCanvas{width:100%;display:block}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.tbtn{width:46px;height:46px;border-radius:50%;border:none;background:#1e3a5f;color:#fff;font-size:18px;cursor:pointer}
+.inp{width:100%;padding:11px;border-radius:10px;border:1px solid #00f2ff33;background:#000;color:#fff;margin:4px 0;font-size:13px}
+.area{width:100%;min-height:80px;padding:11px;border-radius:10px;border:1px solid #00f2ff33;background:#000;color:#fff;margin:4px 0;font-size:13px}
+.out{width:100%;min-height:100px;background:#fff;color:#000;border-radius:10px;padding:12px;font-size:12px;white-space:pre-wrap;text-align:left}
+.footer{text-align:center;padding:8px;font-size:11px;color:#00ff88}
 </style></head><body>
 <div class="top">
-<div class="logo"><span>be</span></div>
-<div class="topInfo"><h1>Benvo Ultra 34 AI</h1><p>Maaya Lubimbiri • Kasambya Mubende</p></div>
-<button class="langToggle" onclick="toggleLang()">🌍</button>
-<div style="text-align:right"><div id="curLangLabel" style="color:#00ff88;font-size:11px;font-weight:900">🇬🇧</div><div id="listenLabel" style="font-size:8px;color:#00f2ff">🎤</div></div>
+<div class="logo">be</div>
+<div style="flex:1"><div id="lockedTitle" style="color:#00f2ff;font-weight:900;font-size:16px">Benvo Ultra 34 Ai</div><div style="font-size:8px;color:#00ff88">Maaya Lubimbiri • Kasambya Mubende • 34 Brains Active</div></div>
+<button class="icon" onclick="toggleLang()">🌍</button>
+<div id="curFlag" style="font-size:18px">🇬🇧</div>
 <div id="langPanel" class="langPanel"></div>
 </div>
 
 <div class="card">
-<div id="assessBox" class="assessBox"><div style="display:flex;justify-content:space-between"><span>👂</span><span id="heardText" style="color:#00f2ff"></span></div><div style="display:flex;justify-content:space-between"><span>🧠</span><span id="assessedLang" style="color:#00ff88;font-weight:900"></span></div><div style="display:flex;justify-content:space-between"><span>🗣️</span><span id="speakLang" style="color:#ffd700"></span></div><div style="height:4px;background:#112240;border-radius:2px;margin-top:6px"><div id="confBar" style="height:4px;background:#00ff88;width:0%;border-radius:2px"></div></div></div>
-<div id="vidBox"><video id="v" autoplay playsinline></video><div style="display:flex;gap:6px;margin-top:6px"><button class="iconTab" onclick="snap()">📸</button><button class="iconTab" style="background:#ff4444;color:#fff" onclick="closeCam()">✕</button></div></div>
+<div id="brainBar"></div>
 <div id="chat"></div>
-<div id="row"><button class="iconTab" onclick="toggleMenu()">☰</button><div id="popMenu">
-<button class="popItem" onclick="doCall();toggleMenu()">📞</button>
-<button class="popItem" onclick="startListenAssess();toggleMenu()">🎤</button>
-<button class="popItem" onclick="doCam();toggleMenu()">📷</button>
-<button class="popItem" onclick="doUp();toggleMenu()">📁</button>
-<button class="popItem" onclick="openEditor();toggleMenu()">✏️</button>
-<button class="popItem" onclick="openCV('cv');toggleMenu()">📄</button>
-<button class="popItem" onclick="openCV('formal');toggleMenu()">✉️</button>
-<button class="popItem" onclick="openTrans();toggleMenu()">🌍</button>
-<button class="popItem" onclick="openDown();toggleMenu()">📥</button>
-<button class="popItem" onclick="clearChat();toggleMenu()">🗑️</button>
-</div><input id="msgInput" placeholder="..."><button id="sendBtn">➤</button><button class="iconTab" id="micBtn" onclick="startListenAssess()">🎤</button><input id="file" type="file" hidden accept="image/*" multiple><input id="camFile" type="file" hidden accept="image/*" capture="environment"></div>
+<div id="row">
+<button class="icon" onclick="togglePop()">☰</button>
+<div id="pop">
+<button class="popBtn" onclick="startCall();togglePop()">📞</button>
+<button class="popBtn" onclick="listenNow();togglePop()">🎤</button>
+<button class="popBtn" onclick="openCam();togglePop()">📷</button>
+<button class="popBtn" onclick="document.getElementById('file').click();togglePop()">📁</button>
+<button class="popBtn" onclick="openModal('editModal');togglePop()">✏️</button>
+<button class="popBtn" onclick="openModal('cvModal');togglePop()">📄</button>
+<button class="popBtn" onclick="openModal('transModal');togglePop()">🌍</button>
+<button class="popBtn" onclick="openModal('downModal');togglePop()">📥</button>
+<button class="popBtn" onclick="clearChat();togglePop()">🗑️</button>
+</div>
+<input id="msgInput" placeholder="..."><button class="icon" id="send">➤</button><button class="icon" id="mic" onclick="listenNow()">🎤</button>
+<input id="file" type="file" hidden accept="image/*" multiple>
+</div>
 <div class="footer">Designed by | ®Benon K | Kasambya Mubende Uganda</div>
 </div>
 
-<div id="editModal"><div id="editBox"><div id="canWrap"><canvas id="bgCanvas"></canvas><canvas id="editCanvas" style="position:absolute;top:0;left:0"></canvas></div><div style="display:flex;gap:6px;margin:8px 0"><input id="cmdInput" style="flex:1;padding:12px;border-radius:20px;border:1px solid #00f2ff66;background:#000;color:#fff"><button class="toolBtn" style="background:#00ff88;color:#000" onclick="runCommand()">▶️</button></div><div class="toolRow"><button class="toolBtn" onclick="setBg('hotel')">🏨</button><button class="toolBtn" onclick="setBg('office')">🏢</button><button class="toolBtn" onclick="applyFilter('suit')">🤵</button><button class="toolBtn" onclick="applyHair('pink')">💇</button><button class="toolBtn" onclick="removeBgAI()" style="background:#00ff88;color:#000">✂️</button><button class="toolBtn" onclick="downloadEdited('jpg')">⬇️</button><button class="toolBtn" onclick="downloadEdited('png')">🖼️</button><button class="toolBtn" onclick="downloadEdited('pdf')">📄</button><button class="toolBtn" onclick="sendEditedToChat()">💬</button><button class="toolBtn" style="background:#ff4444;color:#fff" onclick="closeEditor()">✕</button></div></div></div>
-
-<div id="cvModal"><div id="cvBox"><input id="cvName" class="cvInput" placeholder="..."><input id="cvTitleInput" class="cvInput" placeholder="..."><input id="cvPhone" class="cvInput" placeholder="..."><textarea id="cvSummary" class="cvTextarea" placeholder="..."></textarea><textarea id="cvExp" class="cvTextarea" placeholder="..."></textarea><textarea id="cvLetterTo" class="cvTextarea" placeholder="..."></textarea><div class="toolRow"><button class="toolBtn" style="background:#00f2ff;color:#000" onclick="generateCV()">🤖</button><button class="toolBtn" style="background:#00ff88;color:#000" onclick="downloadCV('pdf')">📄</button><button class="toolBtn" onclick="downloadCV('doc')">📃</button><button class="toolBtn" onclick="downloadCV('txt')">📝</button><button class="toolBtn" onclick="sendCVToChat()">💬</button><button class="toolBtn" style="background:#ff4444;color:#fff" onclick="closeCV()">✕</button></div><div id="cvOutput"></div></div></div>
-
-<div id="transModal"><div id="transBox"><div style="display:flex;gap:6px"><select id="fromLang" class="transSelect"><option value="auto">🌍</option><option value="en">🇬🇧</option><option value="lg">🇺🇬</option><option value="sw">🇹🇿</option><option value="fr">🇫🇷</option><option value="ar">🇸🇦</option></select><select id="toLang" class="transSelect"><option value="lg">🇺🇬</option><option value="sw">🇹🇿</option><option value="fr">🇫🇷</option><option value="ar">🇸🇦</option><option value="en">🇬🇧</option><option value="es">🇪🇸</option></select></div><textarea id="transInput" class="cvTextarea" placeholder="..."></textarea><div class="toolRow"><button class="toolBtn" style="background:#00f2ff;color:#000" onclick="doTranslate()">🌍</button><button class="toolBtn" onclick="swapLang()">⇄</button><button class="toolBtn" style="background:#ff4444;color:#fff" onclick="closeTrans()">✕</button></div><div id="transOutput"></div><div class="toolRow"><button class="toolBtn" style="background:#00ff88;color:#000" onclick="downloadTrans('txt')">📝</button><button class="toolBtn" style="background:#00f2ff;color:#000" onclick="downloadTrans('pdf')">📄</button><button class="toolBtn" onclick="sendTransToChat()">💬</button><button class="toolBtn" onclick="speakTrans()">🔊</button></div></div></div>
-
-<div id="downModal"><div id="downBox"><div class="downItem"><div style="flex:1">📄</div><button class="toolBtn" style="background:#00ff88;color:#000" onclick="downloadCV('pdf')">📄</button><button class="toolBtn" onclick="downloadCV('doc')">📃</button><button class="toolBtn" onclick="downloadCV('txt')">📝</button></div><div class="downItem"><div style="flex:1">✉️</div><button class="toolBtn" style="background:#00f2ff;color:#000" onclick="downloadSpecific('formal','pdf')">📄</button><button class="toolBtn" onclick="downloadSpecific('formal','txt')">📝</button></div><div class="downItem"><div style="flex:1">✏️</div><button class="toolBtn" style="background:#00ff88;color:#000" onclick="downloadEdited('jpg')">🖼️</button><button class="toolBtn" style="background:#00f2ff;color:#000" onclick="downloadEdited('png')">🌄</button><button class="toolBtn" style="background:#8a2be2;color:#fff" onclick="downloadEdited('pdf')">📄</button></div><div class="downItem"><div style="flex:1">🌍</div><button class="toolBtn" style="background:#00ff88;color:#000" onclick="downloadTrans('txt')">📝</button><button class="toolBtn" style="background:#00f2ff;color:#000" onclick="downloadTrans('pdf')">📄</button></div><div class="downItem"><div style="flex:1">💬</div><button class="toolBtn" style="background:#00ff88;color:#000" onclick="downloadChat('txt')">📝</button><button class="toolBtn" style="background:#00f2ff;color:#000" onclick="downloadChat('pdf')">📄</button><button class="toolBtn" style="background:#8a2be2;color:#fff" onclick="downloadChat('json')">🔗</button></div><div class="downItem"><div style="flex:1">📱</div><button class="toolBtn" style="background:#fff;color:#000" onclick="downloadApp()">📥</button></div><div class="toolRow"><button class="toolBtn" style="background:#ff4444;color:#fff" onclick="closeDown()">✕</button><button class="toolBtn" style="background:#00ff88;color:#000;width:60px;height:60px;font-size:22px" onclick="downloadAllFiles()">📥</button></div></div></div>
+<div id="editModal" class="modal"><div class="box"><div id="canWrap"><canvas id="bgCanvas"></canvas><canvas id="editCanvas" style="position:absolute;top:0;left:0"></canvas></div><div style="display:flex;gap:6px;margin:8px 0"><input id="cmd" class="inp" style="flex:1"><button class="tbtn" style="background:#00ff88;color:#000" onclick="runCmd()">▶️</button></div><div class="tools"><button class="tbtn" onclick="setBg('hotel')">🏨</button><button class="tbtn" onclick="setBg('office')">🏢</button><button class="tbtn" onclick="setSuit()">🤵</button><button class="tbtn" onclick="setHair()">💇</button><button class="tbtn" onclick="removeBg()">✂️</button><button class="tbtn" onclick="downloadPhoto('jpg')">⬇️</button><button class="tbtn" onclick="closeModal('editModal')">✕</button></div></div></div>
+<div id="cvModal" class="modal"><div class="box"><input id="cvName" class="inp"><input id="cvTitle" class="inp"><input id="cvPhone" class="inp"><textarea id="cvSum" class="area"></textarea><textarea id="cvExp" class="area"></textarea><textarea id="cvTo" class="area"></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff" onclick="genCV()">🤖</button><button class="tbtn" style="background:#00ff88;color:#000" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button><button class="tbtn" onclick="closeModal('cvModal')">✕</button></div><div id="cvOut" class="out"></div></div></div>
+<div id="transModal" class="modal"><div class="box"><div style="display:flex;gap:6px"><select id="from" class="inp" style="flex:1"><option value="auto">Auto</option><option value="en">EN</option><option value="lg">LG</option><option value="sw">SW</option><option value="fr">FR</option><option value="ar">AR</option></select><select id="to" class="inp" style="flex:1"><option value="lg">LG</option><option value="sw">SW</option><option value="fr">FR</option><option value="ar">AR</option><option value="en">EN</option></select></div><textarea id="transIn" class="area"></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff" onclick="doTrans()">🌍</button><button class="tbtn" onclick="swap()">⇄</button><button class="tbtn" style="background:red" onclick="closeModal('transModal')">✕</button><button class="tbtn" onclick="downTrans('txt')">📝</button><button class="tbtn" onclick="speakTrans()">🔊</button></div><div id="transOut" class="out"></div></div></div>
+<div id="downModal" class="modal"><div class="box"><div style="display:flex;justify-content:space-between;margin:8px 0"><span>📄</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button></div></div><div style="display:flex;justify-content:space-between;margin:8px 0"><span>✏️</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downloadPhoto('jpg')">🖼️</button><button class="tbtn" onclick="downloadPhoto('png')">🌄</button></div></div><div style="display:flex;justify-content:space-between;margin:8px 0"><span>💬</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downChat('txt')">📝</button><button class="tbtn" onclick="downChat('pdf')">📄</button></div></div><div class="tools"><button class="tbtn" style="background:red" onclick="closeModal('downModal')">✕</button><button class="tbtn" style="background:#fff;color:#000" onclick="downloadApp()">📥</button></div></div></div>
 
 <script>
-const LANGS=[{code:'en',name:'English',flag:'🇬🇧',locale:'en-US'},{code:'lg',name:'Luganda',flag:'🇺🇬',locale:'en-US'},{code:'sw',name:'Kiswahili',flag:'🇹🇿',locale:'sw-TZ'},{code:'fr',name:'Français',flag:'🇫🇷',locale:'fr-FR'},{code:'ar',name:'العربية',flag:'🇸🇦',locale:'ar-SA'},{code:'es',name:'Español',flag:'🇪🇸',locale:'es-ES'}];
-let currentLang='en';
-function detectLangDetailed(t){let low=t.toLowerCase();let s={lg:0,sw:0,fr:0,ar:0,en:0};if(/[\u0600-\u06FF]/.test(t))s.ar+=50;if(low.match(/\b(oli otya|ki kati|weebale|nkwagala|wasuze|gyebale|mukwano|bulungi)\b/))s.lg+=40;if(low.match(/\b(habari|asante|nakupenda|karibu|sawa)\b/))s.sw+=40;if(low.match(/\b(bonjour|merci|comment|ça va)\b/))s.fr+=40;let max=0,det='en';for(let k in s){if(s[k]>max){max=s[k];det=k;}}return {lang:det,confidence:max>0?95:70};}
-const INTRO="Welcome to Benvo Ultra 34 AI";
-let h=JSON.parse(localStorage.getItem('b34')||'[]');if(h.length===0){h=[{r:'b',t:INTRO}];localStorage.setItem('b34',JSON.stringify(h));}
-let rec,stream=null,callOn=false,menuOpen=false,langOpen=false,editImg=new Image(),editRot=0,flip=false,curFilter='none',bgMode='transparent',hairColor=null,segmentation=null,segMask=null,cvMode='cv';
-const chat=document.getElementById('chat'),inp=document.getElementById('msgInput'),v=document.getElementById('v'),vidBox=document.getElementById('vidBox'),pop=document.getElementById('popMenu'),editModal=document.getElementById('editModal'),cvModal=document.getElementById('cvModal'),transModal=document.getElementById('transModal'),downModal=document.getElementById('downModal'),editCanvas=document.getElementById('editCanvas'),bgCanvas=document.getElementById('bgCanvas'),ctx=editCanvas.getContext('2d'),bgCtx=bgCanvas.getContext('2d'),cmdInput=document.getElementById('cmdInput'),cvOutput=document.getElementById('cvOutput'),transInput=document.getElementById('transInput'),transOutput=document.getElementById('transOutput'),fromLang=document.getElementById('fromLang'),toLang=document.getElementById('toLang'),langPanel=document.getElementById('langPanel'),curLangLabel=document.getElementById('curLangLabel'),assessBox=document.getElementById('assessBox'),heardText=document.getElementById('heardText'),assessedLang=document.getElementById('assessedLang'),speakLang=document.getElementById('speakLang'),confBar=document.getElementById('confBar'),listenLabel=document.getElementById('listenLabel'),micBtn=document.getElementById('micBtn');
-function renderLangPanel(){langPanel.innerHTML='';LANGS.forEach(l=>{let b=document.createElement('button');b.className='langChip'+(currentLang===l.code?' active':'');b.innerText=l.flag;b.onclick=()=>{currentLang=l.code;curLangLabel.innerText=l.flag;renderLangPanel();toggleLang();};langPanel.appendChild(b);});}renderLangPanel();
+// TITLE LOCKED - DO NOT CHANGE
+const LOCKED_TITLE="Benvo Ultra 34 Ai";
+document.title=LOCKED_TITLE;
+setInterval(()=>{if(document.title!==LOCKED_TITLE)document.title=LOCKED_TITLE;let el=document.getElementById('lockedTitle');if(el&&el.textContent!==LOCKED_TITLE)el.textContent=LOCKED_TITLE;},100);
+Object.defineProperty(document,'title',{get:()=>LOCKED_TITLE,set:()=>{}});
+
+// 34 BRAINS
+const BRAINS=[{id:1,name:'General'},{id:2,name:'Greeting'},{id:3,name:'DateTime'},{id:4,name:'Mubende'},{id:5,name:'Uganda'},{id:6,name:'CV'},{id:7,name:'Formal'},{id:8,name:'Informal'},{id:9,name:'Application'},{id:10,name:'Cover'},{id:11,name:'Luganda'},{id:12,name:'Kiswahili'},{id:13,name:'French'},{id:14,name:'Arabic'},{id:15,name:'Spanish'},{id:16,name:'English'},{id:17,name:'Translate'},{id:18,name:'BG'},{id:19,name:'Suit'},{id:20,name:'Hair'},{id:21,name:'RemoveBG'},{id:22,name:'Listen'},{id:23,name:'Speak'},{id:24,name:'Assess'},{id:25,name:'Math'},{id:26,name:'Education'},{id:27,name:'Business'},{id:28,name:'Health'},{id:29,name:'Agri'},{id:30,name:'Tech'},{id:31,name:'Download'},{id:32,name:'PDF'},{id:33,name:'Creative'},{id:34,name:'Master'}];
+let activeBrain=1;
+const LANGS=[{c:'en',f:'🇬🇧',l:'en-US'},{c:'lg',f:'🇺🇬',l:'en-US'},{c:'sw',f:'🇹🇿',l:'sw-TZ'},{c:'fr',f:'🇫🇷',l:'fr-FR'},{c:'ar',f:'🇸🇦',l:'ar-SA'}];
+let cur='en',rec=null,callOn=false,popOpen=false,langOpen=false;
+let editImg=new Image(),bgMode='black',isSuit=false,isHair=false,segMask=null,seg=null;
+let history=JSON.parse(localStorage.getItem('benvo34')||'[]');
+if(history.length==0){history=[{r:'bot',t:'Hello! I am '+LOCKED_TITLE+'\n34 Brains Active ✅\nMaaya Lubimbiri Kasambya Mubende'}];}
+const chat=document.getElementById('chat'),input=document.getElementById('msgInput'),pop=document.getElementById('pop'),langPanel=document.getElementById('langPanel'),curFlag=document.getElementById('curFlag'),brainBar=document.getElementById('brainBar');
+const bgCanvas=document.getElementById('bgCanvas'),editCanvas=document.getElementById('editCanvas'),bgCtx=bgCanvas.getContext('2d'),ctx=editCanvas.getContext('2d');
+
+function renderBrains(){brainBar.innerHTML='';BRAINS.forEach(b=>{let d=document.createElement('div');d.className='brain'+(b.id==activeBrain?' active':'');d.textContent='🧠'+b.id;brainBar.appendChild(d);});}
+function setActiveBrain(id){activeBrain=id;renderBrains();}
+function renderLang(){langPanel.innerHTML='';LANGS.forEach(x=>{let b=document.createElement('button');b.className='lang'+(cur==x.c?' active':'');b.textContent=x.f;b.onclick=()=>{cur=x.c;curFlag.textContent=x.f;toggleLang();};langPanel.appendChild(b);});}
+renderLang();renderBrains();
 function toggleLang(){langOpen=!langOpen;langPanel.classList.toggle('show',langOpen);}
-function draw(){chat.innerHTML='';h.forEach(m=>{let d=document.createElement('div');d.className='msg '+(m.r==='u'?'user':'bot');d.innerText=m.t;if(m.img){let im=document.createElement('img');im.src=m.img;d.appendChild(im);}chat.appendChild(d)});chat.scrollTop=99999}draw();
-function save(){localStorage.setItem('b34',JSON.stringify(h))}
-function speakText(text,langCode){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);let info=LANGS.find(l=>l.code===langCode)||LANGS[0];u.lang=info.locale;u.rate=0.9;speechSynthesis.speak(u);}
-async function reply(t){let assess=detectLangDetailed(t);currentLang=assess.lang;assessBox.style.display='block';heardText.innerText='"'+t.slice(0,30)+'"';assessedLang.innerText=assess.lang.toUpperCase()+' '+assess.confidence+'%';speakLang.innerText=LANGS.find(l=>l.code===assess.lang)?.flag||'';confBar.style.width=assess.confidence+'%';curLangLabel.innerText=LANGS.find(l=>l.code===assess.lang)?.flag||'🇬🇧';renderLangPanel();let baseReply=t;h.push({r:'b',t:baseReply});save();draw();speakText(baseReply,assess.lang);}
-function send(){let t=inp.value.trim();if(!t)return;h.push({r:'u',t:t});save();draw();inp.value='';setTimeout(()=>reply(t),200);}
-function toggleMenu(){menuOpen=!menuOpen;pop.style.display=menuOpen?'block':'none';}
-document.getElementById('sendBtn').onclick=send;inp.onkeydown=e=>{if(e.key==='Enter')send()};
-function doUp(){document.getElementById('file').click();}
-document.getElementById('file').onchange=e=>{for(let f of e.target.files){let rd=new FileReader();rd.onload=x=>{h.push({r:'u',t:'📁',img:x.target.result});save();draw();openEditorWithImg(x.target.result);};rd.readAsDataURL(f);}};
-document.getElementById('camFile').onchange=e=>{for(let f of e.target.files){let rd=new FileReader();rd.onload=x=>{h.push({r:'u',t:'📷',img:x.target.result});save();draw();openEditorWithImg(x.target.result);};rd.readAsDataURL(f);}};
-async function openCam(){try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});v.srcObject=stream;vidBox.style.display='block';}catch{document.getElementById('camFile').click();}} function doCam(){openCam();}
-function closeCam(){if(stream)stream.getTracks().forEach(t=>t.stop());vidBox.style.display='none';}
-function snap(){let c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);let url=c.toDataURL('image/jpeg',0.9);h.push({r:'u',t:'📷',img:url});save();draw();closeCam();openEditorWithImg(url);}
-function openEditorWithImg(src){editImg.src=src;editImg.onload=()=>{let w=editImg.width,h2=editImg.height;let maxW=800;if(w>maxW){h2=h2*maxW/w;w=maxW;}editCanvas.width=bgCanvas.width=w;editCanvas.height=bgCanvas.height=h2;drawScene();editModal.style.display='block';initSegmentation();};}
-function openEditor(){if(!editImg.src){editCanvas.width=bgCanvas.width=600;editCanvas.height=bgCanvas.height=400;bgCtx.fillStyle='#000';bgCtx.fillRect(0,0,600,400);}editModal.style.display='block';}
-function closeEditor(){editModal.style.display='none';}
-function initSegmentation(){try{const seg=new SelfieSegmentation({locateFile:(f)=>`https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${f}`});seg.setOptions({modelSelection:1});seg.onResults((res)=>{segMask=res.segmentationMask;drawScene();});segmentation=seg;segmentation.send({image:editImg});}catch(e){}}
-function drawScene(){let w=editCanvas.width,h2=editCanvas.height;bgCtx.clearRect(0,0,w,h2);if(bgMode==='transparent'){bgCtx.fillStyle='#000';bgCtx.fillRect(0,0,w,h2);}else if(bgMode==='hotel'){let g=bgCtx.createLinearGradient(0,0,0,h2);g.addColorStop(0,'#4a2c0a');g.addColorStop(1,'#d9b18e');bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h2);}else if(bgMode==='office'){let g=bgCtx.createLinearGradient(0,0,0,h2);g.addColorStop(0,'#0a1931');g.addColorStop(1,'#1e90ff');bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h2);}else if(bgMode==='beach'){let g=bgCtx.createLinearGradient(0,0,0,h2);g.addColorStop(0,'#87CEEB');g.addColorStop(1,'#FFD700');bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h2);}else if(bgMode==='white'){bgCtx.fillStyle='#fff';bgCtx.fillRect(0,0,w,h2);}else if(bgMode==='suit'){bgCtx.fillStyle='#111';bgCtx.fillRect(0,0,w,h2);}
-ctx.clearRect(0,0,w,h2);ctx.save();ctx.translate(w/2,h2/2);ctx.rotate(editRot*Math.PI/180);ctx.scale(flip?-1:1,1);let dw=editImg.width,dh=editImg.height;let sc=Math.min(w/dw,h2/dh);dw*=sc;dh*=sc;let x=-dw/2,y=-dh/2;if(segMask&&bgMode!=='transparent'){ctx.drawImage(segMask,x,y,dw,dh);ctx.globalCompositeOperation='source-in';}ctx.drawImage(editImg,x,y,dw,dh);ctx.globalCompositeOperation='source-over';if(curFilter==='suit'||bgMode==='suit'){ctx.fillStyle='#0a0a0a';let sy=y+dh*0.55;let sh=dh*0.45;ctx.fillRect(x+dw*0.15,sy,dw*0.7,sh);}if(hairColor){ctx.globalCompositeOperation='multiply';ctx.fillStyle=hairColor==='pink'?'#ff69b4aa':'#ffd700aa';ctx.fillRect(x+dw*0.15,y,dw*0.7,dh*0.35);ctx.globalCompositeOperation='source-over';}ctx.restore();}
-function setBg(m){bgMode=m;drawScene();}
-function applyFilter(f){curFilter=f;drawScene();}
-function applyHair(c){hairColor=c;drawScene();}
-function removeBgAI(){bgMode='transparent';if(segmentation)segmentation.send({image:editImg});drawScene();}
-function runCommand(){let cmd=cmdInput.value.toLowerCase();if(cmd.includes('hotel'))setBg('hotel');if(cmd.includes('office'))setBg('office');if(cmd.includes('beach'))setBg('beach');if(cmd.includes('suit'))applyFilter('suit');if(cmd.includes('pink'))applyHair('pink');if(cmd.includes('blonde'))applyHair('blonde');if(cmd.includes('remove'))removeBgAI();}
-function downloadEdited(fmt){let fc=document.createElement('canvas');fc.width=bgCanvas.width;fc.height=bgCanvas.height;let fCtx=fc.getContext('2d');fCtx.drawImage(bgCanvas,0,0);fCtx.drawImage(editCanvas,0,0);if(fmt==='jpg'){let a=document.createElement('a');a.download='Benvo-Photo-'+Date.now()+'.jpg';a.href=fc.toDataURL('image/jpeg',0.92);a.click();}else if(fmt==='png'){let a=document.createElement('a');a.download='Benvo-Photo-'+Date.now()+'.png';a.href=fc.toDataURL('image/png');a.click();}else if(fmt==='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF({orientation:fc.width>fc.height?'landscape':'portrait',unit:'px',format:[fc.width,fc.height]});pdf.addImage(fc.toDataURL('image/jpeg',0.9),'JPEG',0,0,fc.width,fc.height);pdf.save('Benvo-Photo-'+Date.now()+'.pdf');}}
-function sendEditedToChat(){let fc=document.createElement('canvas');fc.width=bgCanvas.width;fc.height=bgCanvas.height;let fCtx=fc.getContext('2d');fCtx.drawImage(bgCanvas,0,0);fCtx.drawImage(editCanvas,0,0);let url=fc.toDataURL('image/jpeg',0.85);h.push({r:'u',t:'✏️',img:url});save();draw();closeEditor();}
-function openCV(mode){cvMode=mode;cvModal.style.display='block';}
-function closeCV(){cvModal.style.display='none';}
-function generateCV(){let name=document.getElementById('cvName').value||'Katugunda Benon';let title=document.getElementById('cvTitleInput').value||'Professional';let contact=document.getElementById('cvPhone').value||'Kasambya';let summary=document.getElementById('cvSummary').value||'';let exp=document.getElementById('cvExp').value||'';let to=document.getElementById('cvLetterTo').value||'';let txt=`${name}\n${title}\n${contact}\n\n${summary}\n\n${exp}\n\n${to}`;document.getElementById('cvOutput').innerText=txt;}
-function downloadCV(fmt){let txt=document.getElementById('cvOutput').innerText;if(!txt){generateCV();txt=document.getElementById('cvOutput').innerText;}if(fmt==='txt'){let blob=new Blob([txt],{type:'text/plain'});let a=document.createElement('a');a.download='Benvo-'+Date.now()+'.txt';a.href=URL.createObjectURL(blob);a.click();}else if(fmt==='doc'){let blob=new Blob([txt],{type:'application/msword'});let a=document.createElement('a');a.download='Benvo-'+Date.now()+'.doc';a.href=URL.createObjectURL(blob);a.click();}else if(fmt==='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF();let lines=pdf.splitTextToSize(txt,180);pdf.text(lines,10,10);pdf.save('Benvo-'+Date.now()+'.pdf');}}
-function downloadSpecific(mode,fmt){cvMode=mode;generateCV();downloadCV(fmt);}
-function sendCVToChat(){let txt=document.getElementById('cvOutput').innerText;if(!txt){generateCV();txt=document.getElementById('cvOutput').innerText;}h.push({r:'b',t:txt});save();draw();closeCV();}
-function openTrans(){transModal.style.display='block';}
-function closeTrans(){transModal.style.display='none';}
-function swapLang(){let a=fromLang.value,b=toLang.value;fromLang.value=b;toLang.value=a;}
-async function doTranslate(){let text=transInput.value.trim();if(!text)return;transOutput.innerText='...';try{let apiTo=toLang.value==='lg'?'sw':toLang.value;let apiFrom=fromLang.value==='lg'?'en':fromLang.value;if(apiFrom==='auto')apiFrom='en';let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${apiFrom}|${apiTo}`;let r=await fetch(url);let d=await r.json();transOutput.innerText=d.responseData.translatedText||text;}catch(e){transOutput.innerText=text;}}
-function downloadTrans(fmt){let txt=`${transInput.value} -> ${transOutput.innerText}`;if(fmt==='txt'){let blob=new Blob([txt],{type:'text/plain'});let a=document.createElement('a');a.download='Benvo-Translate-'+Date.now()+'.txt';a.href=URL.createObjectURL(blob);a.click();}else if(fmt==='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF();let lines=pdf.splitTextToSize(txt,180);pdf.text(lines,10,10);pdf.save('Benvo-Translate-'+Date.now()+'.pdf');}}
-function sendTransToChat(){let txt=`${fromLang.value}→${toLang.value}: ${transInput.value} → ${transOutput.innerText}`;h.push({r:'b',t:txt});save();draw();closeTrans();}
-function speakTrans(){speakText(transOutput.innerText,toLang.value);}
-function openDown(){downModal.style.display='block';}
-function closeDown(){downModal.style.display='none';}
-function downloadChat(fmt){let all=h.map(m=>`${m.r==='u'?'USER':'BENVO'}: ${m.t}`).join('\n\n');if(fmt==='txt'){let blob=new Blob([all],{type:'text/plain'});let a=document.createElement('a');a.download='Benvo-Chat-'+Date.now()+'.txt';a.href=URL.createObjectURL(blob);a.click();}else if(fmt==='json'){let blob=new Blob([JSON.stringify(h,null,2)],{type:'application/json'});let a=document.createElement('a');a.download='Benvo-Chat-'+Date.now()+'.json';a.href=URL.createObjectURL(blob);a.click();}else if(fmt==='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF();let lines=pdf.splitTextToSize(all,180);let y=10;for(let i=0;i<lines.length;i++){if(y>280){pdf.addPage();y=10;}pdf.text(lines[i],10,y);y+=6;}pdf.save('Benvo-Chat-'+Date.now()+'.pdf');}}
-function downloadApp(){let html=document.documentElement.outerHTML;let blob=new Blob([html],{type:'text/html'});let a=document.createElement('a');a.download='Benvo-App-'+Date.now()+'.html';a.href=URL.createObjectURL(blob);a.click();}
-function downloadAllFiles(){let cv=document.getElementById('cvOutput').innerText||'';let trans=`${transInput.value} -> ${transOutput.innerText}`;let chatTxt=h.map(m=>`${m.r==='u'?'USER':'BENVO'}: ${m.t}`).join('\n\n');let combined=`${cv}\n\n${trans}\n\n${chatTxt}`;let blob=new Blob([combined],{type:'text/plain'});let a=document.createElement('a');a.download='Benvo-All-'+Date.now()+'.txt';a.href=URL.createObjectURL(blob);a.click();}
-function clearChat(){if(confirm('?')){h=[{r:'b',t:INTRO}];save();draw();}}
-function startListenAssess(){
- assessBox.style.display='block';heardText.innerText='...';assessedLang.innerText='...';micBtn.classList.add('micPulse');listenLabel.innerText='👂';
- try{
-  if(!rec){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){return;}rec=new SR();rec.continuous=false;rec.interimResults=true;rec.lang='en-US';}
-  rec.lang=LANGS.find(l=>l.code===currentLang)?.locale||'en-US';if(currentLang==='lg')rec.lang='en-US';
-  rec.start();
-  rec.onresult=(e)=>{let final='',interim='';for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript+' ';}let txt=(final||interim).trim();if(!txt)return;heardText.innerText='"'+txt+'"';let assess=detectLangDetailed(txt);assessedLang.innerText=assess.lang.toUpperCase();speakLang.innerText=LANGS.find(l=>l.code===assess.lang)?.flag||'';confBar.style.width=assess.confidence+'%';curLangLabel.innerText=LANGS.find(l=>l.code===assess.lang)?.flag||'🇬🇧';document.getElementById('msgInput').value=txt;if(e.results[e.results.length-1].isFinal){setTimeout(()=>{micBtn.classList.remove('micPulse');let t=txt;h.push({r:'u',t:'🎤 '+t});save();draw();reply(t);},600);}};
-  rec.onend=()=>{micBtn.classList.remove('micPulse');if(callOn)setTimeout(()=>{try{rec.start()}catch{}},800);else listenLabel.innerText='🎤';};
- }catch(err){micBtn.classList.remove('micPulse');}
+function togglePop(){popOpen=!popOpen;pop.style.display=popOpen?'block':'none';}
+function openModal(id){document.getElementById(id).style.display='block';}function closeModal(id){document.getElementById(id).style.display='none';}
+function drawChat(){chat.innerHTML='';history.forEach(m=>{let d=document.createElement('div');d.className='msg '+(m.r=='user'?'user':'bot');d.textContent=m.t;if(m.img){let im=document.createElement('img');im.src=m.img;im.style.width='100%';im.style.borderRadius='8px';d.appendChild(im);}chat.appendChild(d);});chat.scrollTop=chat.scrollHeight;}drawChat();
+function save(){localStorage.setItem('benvo34',JSON.stringify(history));}
+
+function selectBrainAndAnswer(t){
+ let q=t.toLowerCase();
+ let today=new Date();
+ let dateStr=today.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+ let timeStr=today.toLocaleTimeString();
+ if(q.match(/^(hi|hello|hey)$/)||q.includes('good morning')){setActiveBrain(2);return 'Hello! Good morning! I am '+LOCKED_TITLE+' - 34 Brains Active from Maaya Lubimbiri Kasambya Mubende Uganda.';}
+ if(q.includes('when is today')||q.includes('today date')){setActiveBrain(3);return 'Today is '+dateStr+'\nTime: '+timeStr+'\nEAT UTC+3\n'+LOCKED_TITLE+' - 34 Brains';}
+ if(q.includes('where is mubende')||q.includes('where is mubende')){setActiveBrain(4);return 'Mubende District is in Central Uganda, 150km west of Kampala.\nKasambya Town in Mubende\nMaaya Lubimbiri village\nHome of '+LOCKED_TITLE+' by Katugunda Benon - From Dust to the World! 🇺🇬';}
+ if(q.includes('oli otya')){setActiveBrain(11);return 'Gyebale! Ndi bulungi! Nze '+LOCKED_TITLE+' okuva e Maaya Lubimbiri. 34 Brains!';}
+ setActiveBrain(34);
+ return '👑 Brain 34 - Master (34 Brains): You said "'+t+'"\nI am '+LOCKED_TITLE+' from Maaya Lubimbiri Kasambya Mubende by Katugunda Benon\n34 Brains include CV, Letters, Translate Luganda/Swahili/French/Arabic, Photo AI Hotel/Suit/Hair, Voice, Download PDF/DOC/JPG\nToday: '+dateStr;
 }
-function doCall(){callOn?stopCall():startCall();}
-async function startCall(){try{await navigator.mediaDevices.getUserMedia({audio:true});}catch{return;}callOn=true;startListenAssess();}
-function stopCall(){callOn=false;try{rec&&rec.stop()}catch{}speechSynthesis.cancel();micBtn.classList.remove('micPulse');}
-document.addEventListener('click',e=>{if(!e.target.closest('#row')&&menuOpen)toggleMenu();if(!e.target.closest('.top')&&langOpen&&!e.target.closest('#langPanel')){langOpen=false;langPanel.classList.remove('show');}});
-</script></body></html>
+function reply(t){let ans=selectBrainAndAnswer(t);history.push({r:'bot',t:ans});save();drawChat();try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(ans);speechSynthesis.speak(u);}catch(e){}}
+document.getElementById('send').onclick=()=>{let t=input.value.trim();if(!t)return;history.push({r:'user',t:t});save();drawChat();input.value='';setTimeout(()=>reply(t),300);};
+input.onkeydown=e=>{if(e.key=='Enter')document.getElementById('send').click();};
+
+// Photo AI
+function openWithSrc(src){editImg.src=src;editImg.onload=()=>{let w=editImg.width,h=editImg.height,max=800;if(w>max){h=h*max/w;w=max;}bgCanvas.width=editCanvas.width=w;bgCanvas.height=editCanvas.height=h;bgMode='black';isSuit=false;isHair=false;drawScene();openModal('editModal');initSeg();};}
+document.getElementById('file').onchange=e=>{for(let f of e.target.files){let r=new FileReader();r.onload=x=>{history.push({r:'user',t:'📁',img:x.target.result});save();drawChat();openWithSrc(x.target.result);};r.readAsDataURL(f);}};
+function drawScene(){let w=bgCanvas.width,h=bgCanvas.height;bgCtx.clearRect(0,0,w,h);if(bgMode=='hotel'){let g=bgCtx.createLinearGradient(0,0,0,h);g.addColorStop(0,'#4a2c0a');g.addColorStop(1,'#d9b18e');bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h);}else if(bgMode=='office'){let g=bgCtx.createLinearGradient(0,0,0,h);g.addColorStop(0,'#0a1931');g.addColorStop(1,'#1e90ff');bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h);}else{bgCtx.fillStyle='#000';bgCtx.fillRect(0,0,w,h);}ctx.clearRect(0,0,w,h);let dw=editImg.width,dh=editImg.height,sc=Math.min(w/dw,h/dh);dw*=sc;dh*=sc;let x=(w-dw)/2,y=(h-dh)/2;if(segMask&&bgMode!='black'){ctx.drawImage(segMask,x,y,dw,dh);ctx.globalCompositeOperation='source-in';}ctx.drawImage(editImg,x,y,dw,dh);ctx.globalCompositeOperation='source-over';if(isSuit){ctx.fillStyle='#111';ctx.fillRect(x+dw*0.15,y+dh*0.55,dw*0.7,dh*0.45);}if(isHair){ctx.globalCompositeOperation='multiply';ctx.fillStyle='#ff69b4aa';ctx.fillRect(x+dw*0.15,y,dw*0.7,dh*0.35);ctx.globalCompositeOperation='source-over';}}
+function initSeg(){try{let s=new SelfieSegmentation({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${f}`});s.setOptions({modelSelection:1});s.onResults(r=>{segMask=r.segmentationMask;drawScene();});seg=s;seg.send({image:editImg});}catch(e){}}
+function setBg(m){bgMode=m;drawScene();}function setSuit(){isSuit=!isSuit;drawScene();}function setHair(){isHair=!isHair;drawScene();}function removeBg(){bgMode='black';if(seg)seg.send({image:editImg});drawScene();}
+function runCmd(){let c=document.getElementById('cmd').value.toLowerCase();if(c.includes('hotel'))setBg('hotel');if(c.includes('office'))setBg('office');if(c.includes('suit'))setSuit();if(c.includes('pink')||c.includes('hair'))setHair();if(c.includes('remove'))removeBg();}
+function downloadPhoto(fmt){let fc=document.createElement('canvas');fc.width=bgCanvas.width;fc.height=bgCanvas.height;let fctx=fc.getContext('2d');fctx.drawImage(bgCanvas,0,0);fctx.drawImage(editCanvas,0,0);if(fmt=='jpg'){let a=document.createElement('a');a.download='Benvo-'+Date.now()+'.jpg';a.href=fc.toDataURL('image/jpeg',0.92);a.click();}if(fmt=='png'){let a=document.createElement('a');a.download='Benvo-'+Date.now()+'.png';a.href=fc.toDataURL('image/png');a.click();}if(fmt=='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF({orientation:fc.width>fc.height?'l':'p',unit:'px',format:[fc.width,fc.height]});pdf.addImage(fc.toDataURL('image/jpeg',0.9),'JPEG',0,0,fc.width,fc.height);pdf.save('Benvo-'+Date.now()+'.pdf');}}
+function openCam(){navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(s=>{let v=document.createElement('video');v.srcObject=s;v.autoplay=true;v.style.width='100%';let b=document.createElement('div');b.className='box';b.appendChild(v);let btn=document.createElement('button');btn.className='tbtn';btn.textContent='📸';btn.style.background='#00f2ff';btn.onclick=()=>{let c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);let url=c.toDataURL('image/jpeg',0.9);history.push({r:'user',t:'📷',img:url});save();drawChat();s.getTracks().forEach(t=>t.stop());document.body.removeChild(wrap);openWithSrc(url);};b.appendChild(btn);let wrap=document.createElement('div');wrap.className='modal';wrap.style.display='block';wrap.appendChild(b);document.body.appendChild(wrap);}).catch(()=>{document.getElementById('file').click();});}
+function genCV(){let n=document.getElementById('cvName').value||'Katugunda Benon';let t=document.getElementById('cvTitle').value||'Professional';let p=document.getElementById('cvPhone').value||'Kasambya Mubende';let s=document.getElementById('cvSum').value||'';let e=document.getElementById('cvExp').value||'';let to=document.getElementById('cvTo').value||'';document.getElementById('cvOut').textContent=n.toUpperCase()+'\n'+t+'\n'+p+'\n\n'+s+'\n\n'+e+'\nTo: '+to+'\n\n'+LOCKED_TITLE;}
+function downCV(fmt){let txt=document.getElementById('cvOut').textContent;if(!txt){genCV();txt=document.getElementById('cvOut').textContent;}if(fmt=='txt'){let b=new Blob([txt],{type:'text/plain'});let a=document.createElement('a');a.download='Benvo-CV-'+Date.now()+'.txt';a.href=URL.createObjectURL(b);a.click();}if(fmt=='doc'){let b=new Blob([txt],{type:'application/msword'});let a=document.createElement('a');a.download='Benvo-CV-'+Date.now()+'.doc';a.href=URL.createObjectURL(b);a.click();}if(fmt=='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF();let lines=pdf.splitTextToSize(txt,180);pdf.text(lines,10,10);pdf.save('Benvo-CV-'+Date.now()+'.pdf');}}
+function swap(){let a=document.getElementById('from').value,b=document.getElementById('to').value;document.getElementById('from').value=b;document.getElementById('to').value=a;}
+async function doTrans(){let text=document.getElementById('transIn').value.trim();if(!text)return;let to=document.getElementById('to').value,from=document.getElementById('from').value,out=document.getElementById('transOut');out.textContent='...';try{let apiTo=to=='lg'?'sw':to,apiFrom=from=='lg'?'en':from;if(apiFrom=='auto')apiFrom='en';let url='https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair='+apiFrom+'|'+apiTo;let r=await fetch(url);let d=await r.json();out.textContent=d.responseData.translatedText||text;}catch(e){out.textContent=text;}}
+function downTrans(fmt){let txt=document.getElementById('transIn').value+' -> '+document.getElementById('transOut').textContent;if(fmt=='txt'){let b=new Blob([txt],{type:'text/plain'});let a=document.createElement('a');a.download='Benvo-Trans-'+Date.now()+'.txt';a.href=URL.createObjectURL(b);a.click();}if(fmt=='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF();let lines=pdf.splitTextToSize(txt,180);pdf.text(lines,10,10);pdf.save('Benvo-Trans-'+Date.now()+'.pdf');}}
+function speakTrans(){let t=document.getElementById('transOut').textContent;try{let u=new SpeechSynthesisUtterance(t);speechSynthesis.speak(u);}catch(e){}}
+function downChat(fmt){let all=history.map(m=>m.t).join('\n\n');if(fmt=='txt'){let b=new Blob([all],{type:'text/plain'});let a=document.createElement('a');a.download='Benvo-Chat-'+Date.now()+'.txt';a.href=URL.createObjectURL(b);a.click();}if(fmt=='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF();let lines=pdf.splitTextToSize(all,180);let y=10;for(let i=0;i<lines.length;i++){if(y>280){pdf.addPage();y=10;}pdf.text(lines[i],10,y);y+=6;}pdf.save('Benvo-Chat-'+Date.now()+'.pdf');}}
+function downloadApp(){let h=document.documentElement.outerHTML;let b=new Blob([h],{type:'text/html'});let a=document.createElement('a');a.download='Benvo-Ultra-34-Ai-'+Date.now()+'.html';a.href=URL.createObjectURL(b);a.click();}
+function listenNow(){try{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;if(!rec){rec=new SR();rec.continuous=false;rec.interimResults=false;}rec.lang=LANGS.find(x=>x.c==cur)?.l||'en-US';rec.start();rec.onresult=e=>{let txt=e.results[0][0].transcript;history.push({r:'user',t:'🎤 '+txt});save();drawChat();reply(txt);};rec.onend=()=>{if(callOn)setTimeout(()=>{try{rec.start()}catch{}},800);};}catch(e){}}
+function startCall(){callOn=true;listenNow();}
+function clearChat(){if(confirm('Clear?')){history=[{r:'bot',t:'Hello! I am '+LOCKED_TITLE}];save();drawChat();}}
+document.addEventListener('click',e=>{if(!e.target.closest('#row')&&popOpen){popOpen=false;pop.style.display='none';}if(!e.target.closest('.top')&&langOpen){langOpen=false;langPanel.classList.remove('show');}});
+</script>
+</body></html>
