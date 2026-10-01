@@ -5,149 +5,108 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Benvo Ultra 34 AI</title>
 <style>
-body{background:#0a1931;color:#fff;font-family:Arial;margin:0;overflow-x:hidden}
-#top{text-align:center;padding:10px;background:linear-gradient(135deg,#00f2ff15,#00ff8815);border-bottom:2px solid #00f2ff44}
-.box{background:#112240;border:2px solid #00f2ff44;border-radius:16px;padding:10px;margin:12px auto;max-width:600px}
-#adOverlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.96);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;overflow-y:auto}
-.adCard{background:#112240;border:2px solid #00f2ff;border-radius:18px;padding:14px;max-width:620px;width:100%;box-shadow:0 0 30px #00f2ff55}
-.wrap{position:relative;height:400px;border-radius:12px;overflow:hidden;border:2px solid #00f2ff55;background:#000}
-.wrap img{width:100%;height:100%;object-fit:cover}
-.wrap.talking img{animation:ken 90s linear infinite}
-@keyframes ken{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
-.dot{position:absolute;top:10px;left:10px;background:red;color:#fff;padding:4px 10px;border-radius:12px;font-size:10px;display:none;font-weight:bold}
-.lab{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#000);padding:30px 10px 10px;font-size:12px;color:#00f2ff;font-weight:bold}
-.timer{color:#00ff88;font-size:13px;text-align:center;margin:8px;font-weight:bold}
-.btn{padding:12px 18px;border-radius:25px;border:none;font-weight:bold;margin:5px;font-size:13px;cursor:pointer}
-.skip{position:absolute;top:10px;right:10px;background:#000000cc;color:#fff;border:1px solid #fff;padding:6px 12px;border-radius:20px;font-size:11px;display:none;z-index:10}
-#chat{height:38vh;overflow-y:auto;padding:10px;margin:10px;background:#112240;border-radius:15px;border:1px solid #00f2ff22}
-.msg{margin:7px;padding:11px;border-radius:16px;max-width:84%;font-size:13px}
+body{background:#0a1931;color:#fff;font-family:Arial;margin:0}
+.top{text-align:center;padding:12px;background:#00f2ff11;border-bottom:2px solid #00f2ff44}
+.card{background:#112240;border:2px solid #00f2ff44;border-radius:14px;padding:10px;margin:10px auto;max-width:600px}
+.photo{width:100%;height:380px;object-fit:cover;border-radius:12px;border:2px solid #00f2ff55;display:block;background:#001a33 url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=600') center/cover}
+.talking{animation:ken 90s linear infinite}
+@keyframes ken{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+.btn{width:100%;padding:14px;border-radius:25px;border:none;font-weight:900;margin:6px 0;font-size:14px;cursor:pointer}
+.play{background:linear-gradient(135deg,#00f2ff,#00ff88);color:#000}
+.skip{background:#222;color:#fff;border:1px solid #666}
+.timer{color:#00ff88;text-align:center;font-size:12px;margin:6px;font-weight:bold}
+.story{font-size:11px;color:#ddd;background:#0a1931;padding:10px;border-radius:8px;margin-top:8px;line-height:1.6}
+#chat{height:32vh;overflow-y:auto;padding:8px;background:#0a1931;border-radius:10px;margin:8px 0;border:1px solid #00f2ff22}
+.msg{margin:6px;padding:10px;border-radius:14px;max-width:84%;font-size:12px}
 .user{background:linear-gradient(135deg,#00f2ff,#00ff88);color:#000;margin-left:auto}
 .bot{background:#1e3a5f}
-#row{display:flex;gap:5px;padding:0 10px 10px}
-#msgInput{flex:1;padding:13px;border-radius:25px;border:1px solid #00f2ff33;background:#0a1931;color:#fff;outline:none}
-#callBtn{flex:1;background:linear-gradient(135deg,#00ff88,#00f2ff);color:#000;padding:13px;border-radius:25px;border:none;font-weight:900}
-#callBtn.active{background:red;color:#fff;animation:pulse 1s infinite}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
-#sendBtn{background:#00f2ff;color:#000;padding:13px 16px;border-radius:25px;border:none;font-weight:900}
+#row{display:flex;gap:5px;padding:0 0 10px}
+#msgInput{flex:1;padding:12px;border-radius:22px;border:1px solid #00f2ff33;background:#0a1931;color:#fff}
+#callBtn{flex:1;padding:12px;border-radius:22px;border:none;font-weight:900;background:linear-gradient(135deg,#00ff88,#00f2ff);color:#000}
+#sendBtn{padding:12px 16px;border-radius:22px;border:none;font-weight:900;background:#00f2ff;color:#000}
 </style>
 </head>
 <body>
-<div id="top"><h1 style="color:#00f2ff;margin:4px">Benvo Ultra 34 AI</h1><p style="color:#00ff88;font-size:11px;margin:0">By Benon Katugunda 🇺🇬 | Maaya Lubimbiri | Ad Once Per Day</p></div>
+<div class="top"><h1 style="color:#00f2ff;margin:0">Benvo Ultra 34 AI</h1><p style="color:#00ff88;font-size:11px">By Benon Katugunda | Maaya Lubimbiri | DAILY AD ONCE</p></div>
 
-<!-- DAILY AD OVERLAY - SHOWS ONCE PER DAY -->
-<div id="adOverlay" style="display:none">
-<div class="adCard">
-<h2 style="color:#00f2ff;text-align:center;margin:6px">🚀 Benvo Ultra 34 AI — Founder Story</h2>
-<p style="color:#00ff88;text-align:center;font-size:11px">Daily Ad — Shows 1 time per day — Then auto disappears to chat</p>
-
-<div class="wrap" id="w1">
-<img id="img1" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="You in lab">
-<div class="dot" id="d1">● REC — 90s</div>
-<div class="skip" id="skip1" onclick="closeAd()">Skip Ad (5s) ✕</div>
-<div class="lab">🔴 LIVE — Benon in Computer Lab — How I Made Benvo Ultra 34 AI — Village to World</div>
+<div class="card" id="adBox">
+<h3 style="color:#00f2ff;font-size:13px">VIDEO 1: HOW I MADE IT — YOU IN LAB — 90 Sec</h3>
+<img class="photo" id="p1" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="You in lab">
+<div class="timer" id="t1">Photo visible — Tap PLAY below — 90 sec — Once per day</div>
+<button class="btn play" onclick="playAd(1)">▶️ PLAY 90-SEC — YOU EXPLAINING IN LAB</button>
+<button class="btn skip" onclick="hideAd()">⏩ SKIP AD → GO TO CHAT (Ad disappears)</button>
+<div class="story" id="s1">Hello, my name is Benon Katugunda, from Maaya Lubimbiri village, Kasambya, Mubende, Uganda. You see me here in this computer lab. With just my phone and laptop — no big funding — I built Benvo Ultra 34 AI, God Brain. Architecture: Data Ingestion Layer, Context Encoder, Memory Module, Reasoning Engine 34B params, Safety Layer. Built with Vercel, Groq gpt-oss-20b 0.8s, Tavily search, Web Speech API infinite call. Fixed hallucination bug with api/chat.js prompt. localStorage history, restartMic infinite loop until YOU tired — 1 hour talk! Village to world!</div>
 </div>
 
-<div class="timer" id="t1">Ad will play 90 seconds — then disappear to chat — Once per day!</div>
-<div style="text-align:center">
-<button class="btn" style="background:linear-gradient(135deg,#00f2ff,#00ff88);color:#000" onclick="playDailyAd()">▶️ PLAY DAILY AD — 90 SEC — YOU EXPLAINING</button>
-<button class="btn" style="background:#112240;color:#fff;border:1px solid #fff" onclick="closeAd()">⏩ Continue to Chat</button>
+<div class="card" id="adBox2">
+<h3 style="color:#00ff88;font-size:13px">VIDEO 2: HOW IT WORKS — 90 Sec</h3>
+<img class="photo" id="p2" src="https://images.unsplash.com/photo-1555099962-4199c345e5b?w=600" alt="How it works">
+<div class="timer" id="t2">Photo visible — Tap PLAY</div>
+<button class="btn play" style="background:linear-gradient(135deg,#00ff88,#00f2ff)" onclick="playAd(2)">▶️ PLAY 90-SEC — HOW IT WORKS</button>
+<button class="btn skip" onclick="hideAd()">⏩ SKIP → CHAT</button>
+<div class="story" id="s2">Watch infinite call: tap START, getUserMedia asks mic, SpeechRecognition continuous true interim true listens forever, silence timer 1.4s auto sends to /api/chat, Groq replies 0.8s, speechSynthesis speaks, onend restartMic loop infinite until YOU tap END CALL when tired — 1 hour straight! Memory localStorage. True phone call mode!</div>
 </div>
 
-<div style="background:#0a1931cc;padding:10px;border-radius:8px;margin-top:8px;font-size:11px;line-height:1.6;color:#ddd" id="s1">Hello, my name is Benon Katugunda, from Maaya Lubimbiri village, Kasambya, Mubende, Uganda. You see me here in this computer lab. With just my phone and laptop — no big funding — I built Benvo Ultra 34 AI, God Brain. On this screen behind me, you can see my architecture: Data Ingestion Layer that takes your voice, Context Encoder that understands meaning, Memory Module that remembers our conversation, Reasoning Engine that thinks with 34 billion parameters, and Safety Layer that stops hallucinations. I built it using Vercel for hosting, Groq API with openai gpt-oss-20b for fastest brain in the world — 0.8 seconds reply, Tavily for live web search, and Web Speech API for infinite voice call. I fixed the Thomas More hallucination bug by writing proper api/chat.js prompt with memory. I added localStorage for chat history, and restartMic loop for infinite call that goes until YOU get tired — you can talk 1 hour straight! This is proof that village innovation from Uganda can beat ChatGPT. This is Benvo Ultra 34 AI — Village to World!</div>
-
-<p style="text-align:center;color:#888;font-size:10px;margin-top:8px">This ad shows once per day. Tomorrow it will show again. After playing, it disappears and you chat.</p>
-</div>
-</div>
-
-<!-- MAIN APP - CHAT -->
-<div class="box" style="margin-top:8px">
-<h3 style="color:#00f2ff;font-size:12px">💬 Benvo Ultra 34 AI — Chat & Infinite Call</h3>
-<p id="adStatus" style="color:#00ff88;font-size:10px;text-align:center"></p>
-</div>
-
+<div class="card" id="chatBox">
+<h3 style="color:#00f2ff;font-size:13px">💬 Chat — Benvo Ultra 34 AI</h3>
 <div id="chat"></div>
-<div id="row"><button id="callBtn">📞 START INFINITE CALL</button><input id="msgInput" placeholder="Talk..."><button id="sendBtn">SEND</button></div>
-<div id="status" style="text-align:center;color:#00ff88;font-size:11px;margin:6px">Ready — Chat continues after daily ad</div>
-<div style="text-align:center"><button class="btn" style="background:#112240;color:#00f2ff;border:1px solid #00f2ff;font-size:10px" onclick="showAdManually()">🎬 Replay Daily Ad (for testing)</button></div>
+<div id="row"><button id="callBtn">📞 CALL</button><input id="msgInput" placeholder="Talk..."><button id="sendBtn">SEND</button></div>
+<div id="status" style="text-align:center;color:#00ff88;font-size:11px">Ad shows once per day — after playing disappears to chat — continuously every day</div>
+<div style="text-align:center"><button style="background:#112240;color:#00f2ff;border:1px solid #00f2ff;padding:8px 14px;border-radius:20px;font-size:10px" onclick="resetAd()">🔄 Show Ad Again (test)</button></div>
+</div>
 
 <script>
-// DAILY AD LOGIC - ONCE PER DAY
-function shouldShowAdToday(){
- let last = localStorage.getItem('benvo_last_ad_date');
- let today = new Date().toDateString();
- return last!== today;
-}
-function markAdShownToday(){
- localStorage.setItem('benvo_last_ad_date', new Date().toDateString());
-}
-function initDailyAd(){
- let overlay = document.getElementById('adOverlay');
- let status = document.getElementById('adStatus');
- if(shouldShowAdToday()){
-  overlay.style.display='flex';
-  status.innerText='🎬 Daily founder story ad — showing once today — will disappear after 90s to chat';
-  // Auto-play after 1 sec
-  setTimeout(()=>{playDailyAd();},1000);
- } else {
-  overlay.style.display='none';
-  status.innerText='✅ Daily ad already shown today — tomorrow it will show again — continue chatting now!';
- }
-}
-function closeAd(){
- speechSynthesis.cancel();
- if(window.adIv) clearInterval(window.adIv);
- document.getElementById('w1').classList.remove('talking');
- document.getElementById('d1').style.display='none';
- document.getElementById('adOverlay').style.display='none';
- markAdShownToday();
- document.getElementById('adStatus').innerText='✅ Ad finished — disappeared — continue chatting — will show again tomorrow!';
- document.getElementById('status').innerText='💬 Chat mode — daily ad gone until tomorrow';
- // Scroll to chat
- document.getElementById('chat').scrollIntoView({behavior:'smooth'});
-}
-function showAdManually(){
- document.getElementById('adOverlay').style.display='flex';
- playDailyAd();
-}
-
-function playDailyAd(){
- let txt = document.getElementById('s1').innerText;
- let wrap = document.getElementById('w1');
- let dot = document.getElementById('d1');
- let tEl = document.getElementById('t1');
- let skip = document.getElementById('skip1');
- let u = new SpeechSynthesisUtterance(txt);
- u.lang='en-US';u.rate=0.88;
- let start = Date.now();
- u.onstart=()=>{
-  wrap.classList.add('talking');dot.style.display='block';
-  setTimeout(()=>{skip.style.display='block';},5000);
-  window.adIv = setInterval(()=>{
-   let e = Math.floor((Date.now()-start)/1000);
-   if(tEl) tEl.innerText='⏱️ YOU EXPLAINING: '+e+'s / 90s — Ad disappears after 90s to chat — Once per day!';
-   if(e>=90){clearInterval(window.adIv); closeAd();}
+let iv=null;
+function playAd(n){
+ let txt=document.getElementById('s'+n).innerText;
+ let photo=document.getElementById('p'+n);
+ let tEl=document.getElementById('t'+n);
+ let u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=0.88;
+ let start=Date.now();
+ u.onstart=function(){
+  photo.classList.add('talking');
+  iv=setInterval(function(){
+   let e=Math.floor((Date.now()-start)/1000);
+   if(tEl) tEl.innerText='⏱️ YOU EXPLAINING: '+e+'s / 90s — Will disappear after 90s!';
+   if(e>=90){clearInterval(iv);tEl.innerText='✅ Finished 90s — Tap SKIP to go to chat'; photo.classList.remove('talking');}
   },1000);
  };
- u.onend=()=>{if(window.adIv) clearInterval(window.adIv); closeAd();};
- speechSynthesis.cancel();
- speechSynthesis.speak(u);
+ u.onend=function(){if(iv)clearInterval(iv); photo.classList.remove('talking'); tEl.innerText='✅ 90 sec done — Tap SKIP';};
+ speechSynthesis.cancel(); speechSynthesis.speak(u);
 }
-
-// Init on load
-window.onload = initDailyAd;
-
-// CHAT + INFINITE CALL LOGIC
+function hideAd(){
+ speechSynthesis.cancel(); if(iv)clearInterval(iv);
+ document.querySelectorAll('.photo').forEach(function(p){p.classList.remove('talking')});
+ let today=new Date().toDateString(); localStorage.setItem('benvo_last_ad_date',today);
+ document.getElementById('adBox').style.display='none';
+ document.getElementById('adBox2').style.display='none';
+ document.getElementById('status').innerText='✅ Ad hidden — Chat continues — Will show again tomorrow (once per day)';
+}
+function resetAd(){
+ localStorage.removeItem('benvo_last_ad_date');
+ document.getElementById('adBox').style.display='block';
+ document.getElementById('adBox2').style.display='block';
+}
+(function(){
+ let last=localStorage.getItem('benvo_last_ad_date');
+ let today=new Date().toDateString();
+ if(last===today){
+  document.getElementById('adBox').style.display='none';
+  document.getElementById('adBox2').style.display='none';
+  document.getElementById('status').innerText='✅ Daily ad already shown today — Tomorrow again — Chat now';
+ }
+})();
 let chatHistory=JSON.parse(localStorage.getItem('benvo34_history')||'[]');let callActive=false,recognition;
-const chatDiv=document.getElementById('chat'),statusEl=document.getElementById('status'),inputEl=document.getElementById('msgInput'),callBtn=document.getElementById('callBtn');
-function render(){chatDiv.innerHTML='';chatHistory.forEach(m=>{let d=document.createElement('div');d.className='msg '+(m.role==='user'?'user':'bot');d.innerText=m.content;chatDiv.appendChild(d)});chatDiv.scrollTop=chatDiv.scrollHeight}render();
+const chatDiv=document.getElementById('chat'),inputEl=document.getElementById('msgInput'),callBtn=document.getElementById('callBtn');
+function render(){chatDiv.innerHTML='';chatHistory.forEach(function(m){let d=document.createElement('div');d.className='msg '+(m.role==='user'?'user':'bot');d.innerText=m.content;chatDiv.appendChild(d)});chatDiv.scrollTop=chatDiv.scrollHeight}render();
 function save(){localStorage.setItem('benvo34_history',JSON.stringify(chatHistory))}
-async function send(t){if(!t.trim())return;chatHistory.push({role:'user',content:t});save();render();inputEl.value='';statusEl.innerText='🧠 Thinking...';try{let r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:t,history:chatHistory.slice(-8)})});let d=await r.json();chatHistory.push({role:'assistant',content:d.reply});save();render();let u=new SpeechSynthesisUtterance(d.reply);u.onstart=()=>{try{recognition.stop()}catch(e){}};u.onend=()=>{if(callActive)restartMic();};speechSynthesis.speak(u);}catch(e){statusEl.innerText='Error';}}
-function restartMic(){if(!callActive)return;setTimeout(()=>{try{recognition.start();}catch(e){setTimeout(restartMic,500)}},700);}
+async function send(t){if(!t.trim())return;chatHistory.push({role:'user',content:t});save();render();inputEl.value='';try{let r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:t,history:chatHistory.slice(-8)})});let d=await r.json();chatHistory.push({role:'assistant',content:d.reply});save();render();let u=new SpeechSynthesisUtterance(d.reply);u.onstart=function(){try{recognition.stop()}catch(e){}};u.onend=function(){if(callActive)restartMic();};speechSynthesis.speak(u);}catch(e){}}
+function restartMic(){if(!callActive)return;setTimeout(function(){try{recognition.start();}catch(e){setTimeout(restartMic,500)}},700);}
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(SR){recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;let timer;recognition.onresult=(e)=>{clearTimeout(timer);let fin='',inter='';for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';else inter+=e.results[i][0].transcript;}inputEl.value=fin+inter;timer=setTimeout(()=>{let s=(fin||inter).trim();if(s.length>1){try{recognition.stop()}catch(e){}inputEl.value='';send(s);}},1400);};recognition.onend=()=>{if(callActive&&!speechSynthesis.speaking)restartMic();};}
-callBtn.onclick=async()=>{if(!callActive){try{await navigator.mediaDevices.getUserMedia({audio:true});}catch(err){alert('Allow mic: Tap lock Allow');return;}callActive=true;callBtn.classList.add('active');callBtn.innerText='🔴 END CALL';try{recognition.start();}catch(e){restartMic();}}else{callActive=false;callBtn.classList.remove('active');callBtn.innerText='📞 START INFINITE CALL';try{recognition.stop();}catch(e){}speechSynthesis.cancel();}};
-document.getElementById('sendBtn').onclick=()=>send(inputEl.value);
-inputEl.onkeypress=(e)=>{if(e.key==='Enter')send(e.target.value)};
+if(SR){recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;let timer;recognition.onresult=function(e){clearTimeout(timer);let fin='',inter='';for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';else inter+=e.results[i][0].transcript;}inputEl.value=fin+inter;timer=setTimeout(function(){let s=(fin||inter).trim();if(s.length>1){try{recognition.stop()}catch(e){}inputEl.value='';send(s);}},1400);};recognition.onend=function(){if(callActive&&!speechSynthesis.speaking)restartMic();};}
+callBtn.onclick=async function(){if(!callActive){try{await navigator.mediaDevices.getUserMedia({audio:true});}catch(err){alert('Allow mic');return;}callActive=true;callBtn.innerText='🔴 END';try{recognition.start();}catch(e){restartMic();}}else{callActive=false;callBtn.innerText='📞 CALL';try{recognition.stop();}catch(e){}speechSynthesis.cancel();}};
+document.getElementById('sendBtn').onclick=function(){send(inputEl.value);};
+inputEl.onkeypress=function(e){if(e.key==='Enter')send(e.target.value);};
 </script>
 </body>
 </html>
