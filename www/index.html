@@ -51,8 +51,8 @@
 </div>
 <div class="footer">Designed by | ®Benon K | Kasambya Mubende Uganda</div>
 </div>
-<div id="cvModal" class="modal"><div class="box"><input id="cvName" class="inp" placeholder="Full Name"><input id="cvTitle" class="inp" placeholder="Title"><input id="cvPhone" class="inp" placeholder="Phone | Email | Location"><textarea id="cvSum" class="area" placeholder="Summary"></textarea><textarea id="cvExp" class="area" placeholder="Experience"></textarea><textarea id="cvTo" class="area" placeholder="To"></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff;color:#000" onclick="genCV()">🤖</button><button class="tbtn" style="background:#00ff88;color:#000" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button><button class="tbtn" onclick="closeModal('cvModal')">✕</button></div><div id="cvOut" class="out"></div></div></div>
-<div id="transModal" class="modal"><div class="box"><div style="display:flex;gap:6px"><select id="from" class="inp" style="flex:1"><option value="auto">Auto</option><option value="en">EN</option><option value="lg">LG</option><option value="sw">SW</option><option value="fr">FR</option><option value="ar">AR</option></select><select id="to" class="inp" style="flex:1"><option value="lg">LG</option><option value="sw">SW</option><option value="fr">FR</option><option value="ar">AR</option><option value="en">EN</option></select></div><textarea id="transIn" class="area" placeholder="Enter text..."></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff;color:#000" onclick="doTrans()">🌍</button><button class="tbtn" onclick="swap()">⇄</button><button class="tbtn" style="background:red" onclick="closeModal('transModal')">✕</button><button class="tbtn" onclick="downTrans('txt')">📝</button><button class="tbtn" onclick="speakTrans()">🔊</button></div><div id="transOut" class="out"></div></div></div>
+<div id="cvModal" class="modal"><div class="box"><input id="cvName" class="inp" placeholder="Full Name"><input id="cvTitle" class="inp" placeholder="Title"><input id="cvPhone" class="inp" placeholder="Phone"><textarea id="cvSum" class="area" placeholder="Summary"></textarea><textarea id="cvExp" class="area" placeholder="Experience"></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff;color:#000" onclick="genCV()">🤖</button><button class="tbtn" style="background:#00ff88;color:#000" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button><button class="tbtn" onclick="closeModal('cvModal')">✕</button></div><div id="cvOut" class="out"></div></div></div>
+<div id="transModal" class="modal"><div class="box"><div style="display:flex;gap:6px"><select id="from" class="inp" style="flex:1"><option value="auto">Auto</option><option value="en">EN</option><option value="lg">LG</option><option value="sw">SW</option><option value="fr">FR</option><option value="ar">AR</option></select><select id="to" class="inp" style="flex:1"><option value="lg">LG</option><option value="sw">SW</option><option value="fr">FR</option><option value="ar">AR</option><option value="en">EN</option></select></div><textarea id="transIn" class="area"></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff;color:#000" onclick="doTrans()">🌍</button><button class="tbtn" onclick="swap()">⇄</button><button class="tbtn" style="background:red" onclick="closeModal('transModal')">✕</button><button class="tbtn" onclick="downTrans('txt')">📝</button><button class="tbtn" onclick="speakTrans()">🔊</button></div><div id="transOut" class="out"></div></div></div>
 <div id="downModal" class="modal"><div class="box"><div style="display:flex;justify-content:space-between;margin:8px 0"><span>📄 CV</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button></div></div><div style="display:flex;justify-content:space-between;margin:8px 0"><span>💬 Chat</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downChat('txt')">📝</button><button class="tbtn" onclick="downChat('pdf')">📄</button></div></div><div class="tools"><button class="tbtn" style="background:red" onclick="closeModal('downModal')">✕</button><button class="tbtn" style="background:#fff;color:#000" onclick="downloadApp()">📥</button></div></div></div>
 <script>
 const LOCKED_TITLE="Benvo Ultra 34 Ai"; document.title=LOCKED_TITLE;
@@ -61,7 +61,7 @@ const BRAINS_34=Array.from({length:34},(_,i)=>i+1);
 const LANGS=[{c:'en',f:'🇬🇧',l:'en-US'},{c:'lg',f:'🇺🇬',l:'en-US'},{c:'sw',f:'🇹🇿',l:'sw-TZ'},{c:'fr',f:'🇫🇷',l:'fr-FR'},{c:'ar',f:'🇸🇦',l:'ar-SA'}];
 let cur='en',rec=null,callOn=false,popOpen=false,langOpen=false;
 let history=JSON.parse(localStorage.getItem('benvo34')||'[]');
-if(history.length==0){history=[{r:'bot',t:'Hello! I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda.\nCreated by Katugunda Benon.\n34 Brains Active - Ask me anything!'}];}
+if(history.length==0){history=[{r:'bot',t:'Hello! I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda.\nCreated by Katugunda Benon.\nAsk me anything!'}];}
 const chat=document.getElementById('chat'),input=document.getElementById('msgInput'),pop=document.getElementById('pop'),langPanel=document.getElementById('langPanel'),curFlag=document.getElementById('curFlag');
 function renderLang(){langPanel.innerHTML='';LANGS.forEach(x=>{let b=document.createElement('button');b.className='lang'+(cur==x.c?' active':'');b.textContent=x.f;b.onclick=()=>{cur=x.c;curFlag.textContent=x.f;toggleLang();};langPanel.appendChild(b);});}renderLang();
 function toggleLang(){langOpen=!langOpen;langPanel.classList.toggle('show',langOpen);}
@@ -69,23 +69,38 @@ function togglePop(){popOpen=!popOpen;pop.style.display=popOpen?'block':'none';}
 function openModal(id){document.getElementById(id).style.display='block';}function closeModal(id){document.getElementById(id).style.display='none';}
 function drawChat(){chat.innerHTML='';history.forEach(m=>{let d=document.createElement('div');d.className='msg '+(m.r=='user'?'user':'bot');d.textContent=m.t;if(m.img){let im=document.createElement('img');im.src=m.img;im.style.width='100%';im.style.borderRadius='8px';im.style.marginTop='6px';d.appendChild(im);}chat.appendChild(d);});chat.scrollTop=chat.scrollHeight;}drawChat();
 function save(){localStorage.setItem('benvo34',JSON.stringify(history));}
+
+// FIXED - HUMAN LIKE 34 BRAINS
 function getAnswer(t){
  let q=t.toLowerCase().trim();
  let today=new Date(); let dateStr=today.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); let timeStr=today.toLocaleTimeString();
- if(q.length<=2){ return 'Hello! You said "'+t+'". I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda. How can I help you?'; }
- if(q.includes('when is today')||q.includes('today date')) return 'Today is '+dateStr+'\nTime: '+timeStr+'\nEAT UTC+3 - Kasambya Mubende';
- if(q==='hi'||q==='hello') return 'Hello! I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende. How can I help?';
- if(q.includes('where is mubende')) return 'Mubende District is in Central Uganda, 150km west of Kampala. Kasambya town in Mubende, Maaya Lubimbiri village. Home of Benvo Ultra 34 Ai!';
- if(q.includes('museveni')) return 'Yoweri Kaguta Museveni is President of Uganda since 29 Jan 1986.\nBorn 15 Sep 1944 Ntungamo\nParty NRM\nLed NRA bush war\nPresident 38+ years\nWife Janet, son Muhoozi';
- if(q.includes('bobi wine')) return 'Bobi Wine Robert Kyagulanyi Ssentamu, born 12 Feb 1982, musician turned politician, leader NUP, People Power.';
- if(q.includes('president of uganda')) return 'President of Uganda is Yoweri Kaguta Museveni since 1986.';
- if(q.includes('capital of uganda')) return 'Capital of Uganda is Kampala.';
- if(q.includes('what is uganda')) return 'Uganda is Pearl of Africa, ~48M people, capital Kampala, independence 9 Oct 1962.';
- if(q.includes('oli otya')) return 'Gyebale! Ndi bulungi! Nze Benvo okuva e Maaya Lubimbiri.';
- if(q.includes('who are you')) return 'I am Benvo Ultra 34 Ai - Created by Katugunda Benon from Maaya Lubimbiri Kasambya Mubende Uganda. 34 Brains active.';
- return 'You said: "'+t+'"\n\nI am Benvo Ultra 34 Ai from Maaya Lubimbiri. I understand you. Tell me more about what you need - CV, translation, or info?';
+
+ // Small talk - where are you, etc - FIXED
+ if(q==='no'||q==='noo'||q==='nno'){ return 'Okay, no problem. Tell me what you need, I am listening. I am Benvo from Maaya Lubimbiri Kasambya Mubende.'; }
+ if(q==='yes'||q==='yeah'||q==='yee'||q==='ok'||q==='okay'){ return 'Great! What do you want me to do for you? I can write CV, translate, or answer any question.'; }
+ if(q.includes('where are you')||q.includes('where r u')||q==='where'){ return 'I am Benvo Ultra 34 Ai — I am here with you! I was created in Maaya Lubimbiri village, Kasambya, Mubende District, Central Uganda. From Dust to the World! I am always here online for you.'; }
+ if(q.includes('how are you')){ return 'I am doing great, my best friend! Thank you for asking. I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende. How are you doing?'; }
+ if(q.includes('who are you')||q.includes('what are you')){ return 'I am Benvo Ultra 34 Ai — Created by Katugunda Benon from Maaya Lubimbiri Kasambya Mubende Uganda. I have 34 Brains: I chat like human, write professional CVs, translate Luganda/Swahili/French/Arabic, edit photos, listen by voice and speak back!'; }
+ if(q==='hi'||q==='hello'||q.includes('hello')||q.includes('hi there')){ return 'Hello my best friend! I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende. How can I help you today?'; }
+ if(q.includes('good morning')){ return 'Good morning my best friend! Have a blessed day from Kasambya Mubende Uganda. I am ready to help you.'; }
+ if(q.includes('when is today')||q.includes('today date')){ return 'Today is '+dateStr+'\nTime: '+timeStr+'\nEAT UTC+3 - Kasambya Mubende Uganda'; }
+ if(q.includes('where is mubende')){ return 'Mubende District is in Central Uganda, 150km west of Kampala on Kampala-Fort Portal road. Kasambya town is in Mubende, Maaya Lubimbiri is a village in Kasambya. Home of Benvo Ultra 34 Ai created by Katugunda Benon!'; }
+ if(q.includes('museveni')){ return 'Yoweri Kaguta Museveni is President of Uganda since 29 Jan 1986.\nBorn 15 Sep 1944 Ntungamo\nParty NRM\nLed NRA bush war 1981-86\nPresident 38+ years\nWife Janet, son Muhoozi Kainerugaba'; }
+ if(q.includes('bobi wine')){ return 'Bobi Wine real name Robert Kyagulanyi Ssentamu, born 12 Feb 1982, musician turned politician, leader of NUP, People Power movement.'; }
+ if(q.includes('president of uganda')){ return 'President of Uganda is Yoweri Kaguta Museveni since 29 Jan 1986. Vice President Jessica Alupo.'; }
+ if(q.includes('capital of uganda')){ return 'Capital of Uganda is Kampala, on Lake Victoria, about 1.7M people in city.'; }
+ if(q.includes('what is uganda')){ return 'Uganda is Pearl of Africa in East Africa, ~48M people, capital Kampala, independence 9 Oct 1962, Lake Victoria, Nile source, gorillas.'; }
+ if(q.includes('oli otya')){ return 'Gyebale! Ndi bulungi! Nze Benvo Ultra 34 Ai okuva e Maaya Lubimbiri Kasambya Mubende. Nkuyamba ntya?'; }
+
+ // Real human fallback - no more "You said: xxx" rubbish
+ return 'I hear you: "'+t+'". I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda. I understand what you mean. Can you tell me a little more about what you want? I can answer questions, write your CV, translate to Luganda/Swahili/French, or help with documents. I am listening, my best friend.';
 }
-function reply(t){ let answer=getAnswer(t); history.push({r:'bot',t:answer}); save(); drawChat(); try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(answer);u.lang='en-US';u.rate=0.9;speechSynthesis.speak(u);}catch(e){} }
+
+function reply(t){
+ let answer=getAnswer(t);
+ history.push({r:'bot',t:answer}); save(); drawChat();
+ try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(answer);u.lang='en-US';u.rate=0.9;speechSynthesis.speak(u);}catch(e){}
+}
 document.getElementById('send').onclick=()=>{let t=input.value.trim();if(!t)return; history.push({r:'user',t:t}); save(); drawChat(); input.value=''; setTimeout(()=>reply(t),250);};
 input.onkeydown=e=>{if(e.key=='Enter')document.getElementById('send').click();};
 document.getElementById('file').onchange=e=>{for(let f of e.target.files){let r=new FileReader();r.onload=x=>{history.push({r:'user',t:'📁 '+f.name,img:x.target.result});save();drawChat();};r.readAsDataURL(f);}};
