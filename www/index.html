@@ -1,55 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Benvo Ultra AI - God Ultra 34 Brain</title>
+<title>Benvo Ultra 34 - God Brain</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:Arial;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:white;min-height:100vh;display:flex;flex-direction:column;margin:0}
-header{background:rgba(0,0,0,0.3);padding:15px;text-align:center;border-bottom:2px solid #00F2FF}
-#chat{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
-.msg{max-width:85%;padding:12px 15px;border-radius:18px;font-size:14px;line-height:1.4}
-.user{background:#00F2FF;color:#000;align-self:flex-end;border-bottom-right-radius:4px}
-.bot{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);align-self:flex-start;border-bottom-left-radius:4px}
-#inputArea{display:flex;padding:12px;background:rgba(0,0,0,0.4);gap:8px}
-#input{flex:1;padding:12px;border-radius:25px;border:none;outline:none}
-button{padding:12px 20px;border-radius:25px;border:none;background:#00F2FF;font-weight:bold;cursor:pointer}
-.brain{font-size:11px;color:#00F2FF;margin-bottom:4px}
+body{background:#0a1931;color:white;font-family:Arial;margin:0;padding:10px}
+#chat{height:75vh;overflow-y:auto;padding:10px;background:#112240;border-radius:10px}
+.msg{margin:10px;padding:12px;border-radius:12px;max-width:85%}
+.user{background:#00f2ff;color:black;margin-left:auto;text-align:right}
+.bot{background:#1e3a5f}
+#inputRow{display:flex;gap:5px;margin-top:10px}
+input{flex:1;padding:15px;border-radius:25px;border:none}
+button{padding:12px 18px;border-radius:25px;border:none;font-weight:bold;cursor:pointer}
+#voiceBtn{background:red;color:white;font-size:22px;width:55px;height:55px;border-radius:50%}
 </style>
 </head>
 <body>
-<header>
-<h2>Benvo ultra Ai</h2>
-<div style="font-size:12px">God Ultra 34 Brain | By Benon Katugunda | Maaya Lubimbiri Kasambya Mubende Uganda</div>
-</header>
-<div id="chat">
-<div class="msg bot">Hello! I am Benvo ultra Ai - God Ultra 34 Brain - Created by Benon Katugunda from Maaya Lubimbiri Kasambya Mubende Uganda - I have 34 Brains ready! Ask me anything!</div>
+<h2>🚀 BENVO ULTRA 34 - GOD BRAIN</h2>
+<div id="chat"></div>
+<div id="inputRow">
+<button id="voiceBtn">🎤</button>
+<input id="msgInput" placeholder="Ask Benvo Ultra AI...">
+<button id="sendBtn" style="background:#00f2ff">SEND</button>
+<button id="exportBtn" style="background:#333;color:white">💾 History</button>
 </div>
-<div id="inputArea">
-<input id="input" placeholder="Ask Benvo ultra AI...">
-<button onclick="send()">SEND</button>
-</div>
+
 <script>
-async function send(){
- const input=document.getElementById('input');
- const chat=document.getElementById('chat');
- const text=input.value.trim();
- if(!text)return;
- chat.innerHTML+=`<div class="msg user">${text}</div>`;
- input.value='';
- const id=Date.now();
- chat.innerHTML+=`<div class="msg bot" id="${id}"><div class="brain">Brain Thinking...</div>Thinking...</div>`;
- chat.scrollTop=chat.scrollHeight;
- try{
-  const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});
-  const data=await res.json();
-  document.getElementById(id).innerHTML=`<div class="brain">Brain Answer</div>${data.reply}`;
- }catch(e){
-  document.getElementById(id).innerHTML=`Error: ${e.message}`;
- }
- chat.scrollTop=chat.scrollHeight;
+let chatHistory = JSON.parse(localStorage.getItem('benvo34_history') || '[]');
+const chatDiv = document.getElementById('chat');
+
+function render(){
+ chatDiv.innerHTML='';
+ chatHistory.forEach(m=>{
+  const d=document.createElement('div');
+  d.className='msg '+(m.role==='user'?'user':'bot');
+  d.innerText=m.content;
+  chatDiv.appendChild(d);
+ });
+ chatDiv.scrollTop=chatDiv.scrollHeight;
 }
-document.getElementById('input').addEventListener('keypress',e=>{if(e.key==='Enter')send()});
+render();
+
+function save(){ localStorage.setItem('benvo34_history', JSON.stringify(chatHistory)); }
+
+async function send(text){
+ if(!text.trim()) return;
+ chatHistory.push({role:'user', content:text});
+ save(); render();
+ document.getElementById('msgInput').value='';
+
+ const res = await fetch('/api/chat', {
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({message:text, history:chatHistory.slice(-8)})
+ });
+ const data = await res.json();
+ chatHistory.push({role:'assistant', content:data.reply});
+ save(); render();
+
+ // VOICE TO VOICE OUT
+ const utter = new SpeechSynthesisUtterance(data.reply.slice(0,400));
+ utter.lang='en-UG';
+ speechSynthesis.speak(utter);
+}
+
+document.getElementById('sendBtn').onclick=()=>send(document.getElementById('msgInput').value);
+document.getElementById('msgInput').onkeypress=(e)=>{if(e.key==='Enter')send(e.target.value)};
+
+// EXPORT FULL HISTORY FILE
+document.getElementById('exportBtn').onclick=()=>{
+ const blob = new Blob([JSON.stringify(chatHistory, null, 2)], {type:'application/json'});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href=url; a.download='benvo-ultra-34-full-history.json';
+ a.click();
+};
+
+// VOICE TO VOICE IN
+const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+if(rec){
+ rec.lang='en-UG';
+ rec.onresult=(e)=>{ send(e.results[0][0].transcript); };
+ document.getElementById('voiceBtn').onclick=()=>{
+   rec.start();
+   document.getElementById('voiceBtn').style.background='green';
+   setTimeout(()=>document.getElementById('voiceBtn').style.background='red', 3000);
+ };
+}
 </script>
 </body>
 </html>
