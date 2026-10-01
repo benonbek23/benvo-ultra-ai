@@ -1,55 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Benvo ultra Ai - God Ultra 34 Brain</title>
+<title>Benvo Ultra AI - God Ultra 34 Brain</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:white;min-height:100vh;display:flex;flex-direction:column}
-header{background:rgba(0,0,0,0.3);padding:15px;text-align:center;border-bottom:2px solid #00f2ff}
-header h1{font-size:22px;color:#00f2ff}
-header p{font-size:12px;opacity:0.8;margin-top:4px}
+body{font-family:Arial;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:white;min-height:100vh;display:flex;flex-direction:column;margin:0}
+header{background:rgba(0,0,0,0.3);padding:15px;text-align:center;border-bottom:2px solid #00F2FF}
 #chat{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
 .msg{max-width:85%;padding:12px 15px;border-radius:18px;font-size:14px;line-height:1.4}
-.user{background:#00f2ff;color:#000;align-self:flex-end;border-bottom-right-radius:4px}
-.bot{background:rgba(255,255,255,0.12);border:1px solid rgba(0,242,255,0.3);align-self:flex-start;border-bottom-left-radius:4px}
+.user{background:#00F2FF;color:#000;align-self:flex-end;border-bottom-right-radius:4px}
+.bot{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);align-self:flex-start;border-bottom-left-radius:4px}
 #inputArea{display:flex;padding:12px;background:rgba(0,0,0,0.4);gap:8px}
-#userInput{flex:1;padding:12px;border-radius:25px;border:none;outline:none;background:rgba(255,255,255,0.9);color:#000}
-#sendBtn{background:#00f2ff;color:#000;border:none;padding:12px 20px;border-radius:25px;font-weight:bold;cursor:pointer}
-footer{text-align:center;padding:8px;font-size:10px;opacity:0.5}
-.brain{color:gold;font-size:11px;display:block;margin-bottom:4px}
+#input{flex:1;padding:12px;border-radius:25px;border:none;outline:none}
+button{padding:12px 20px;border-radius:25px;border:none;background:#00F2FF;font-weight:bold;cursor:pointer}
+.brain{font-size:11px;color:#00F2FF;margin-bottom:4px}
 </style>
 </head>
 <body>
 <header>
-<h1>Benvo ultra Ai</h1>
-<p>God Ultra 34 Brain | By Benon Katugunda | Maaya Lubimbiri Kasambya Mubende Uganda</p>
+<h2>Benvo ultra Ai</h2>
+<div style="font-size:12px">God Ultra 34 Brain | By Benon Katugunda | Maaya Lubimbiri Kasambya Mubende Uganda</div>
 </header>
-<div id="chat"><div class="msg bot">Hello! Am Benvo ultra Ai - God Ultra 34 Brain - Created by Benon Katugunda from Maaya Lubimbiri Kasambya Mubende Uganda - I have 34 Brains ready! Ask me anything! 🧠</div></div>
-<div id="inputArea"><input id="userInput" placeholder="Ask Benvo ultra Ai..." /><button id="sendBtn" onclick="send()">SEND</button></div>
-<footer>© 2026 Benon Katugunda | Benvo ultra Ai | Maaya to World</footer>
+<div id="chat">
+<div class="msg bot">Hello! I am Benvo ultra Ai - God Ultra 34 Brain - Created by Benon Katugunda from Maaya Lubimbiri Kasambya Mubende Uganda - I have 34 Brains ready! Ask me anything! 🧠</div>
+</div>
+<div id="inputArea">
+<input id="input" placeholder="Ask Benvo ultra AI...">
+<button onclick="send()">SEND</button>
+</div>
 <script>
-const chat=document.getElementById('chat');
-const input=document.getElementById('userInput');
 async function send(){
- let text=input.value.trim();
- if(!text) return;
+ const input=document.getElementById('input');
+ const chat=document.getElementById('chat');
+ const text=input.value.trim();
+ if(!text)return;
  chat.innerHTML+=`<div class="msg user">${text}</div>`;
  input.value='';
- chat.innerHTML+=`<div class="msg bot" id="think"><span class="brain">🧠 God Ultra 34 is thinking...</span>Analyzing with 34 brains...</div>`;
+ const id=Date.now();
+ chat.innerHTML+=`<div class="msg bot" id="${id}"><div class="brain">🧠 Brain Thinking...</div>Thinking...</div>`;
  chat.scrollTop=chat.scrollHeight;
  try{
   const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});
   const data=await res.json();
-  document.getElementById('think').remove();
-  chat.innerHTML+=`<div class="msg bot"><span class="brain">🧠 Brain ${data.brain}: ${data.brainName}</span>${data.reply}</div>`;
+  document.getElementById(id).innerHTML=`<div class="brain">🧠 Brain Answer</div>${data.reply}`;
  }catch(e){
-  document.getElementById('think').innerHTML=`Error: Add GROQ_API_KEY in Vercel Settings!<br>${e.message}`;
+  document.getElementById(id).innerHTML=`Error: ${e.message} - Check GROQ_API_KEY in Vercel`;
  }
  chat.scrollTop=chat.scrollHeight;
 }
-input.addEventListener('keypress',e=>{if(e.key==='Enter') send()});
+document.getElementById('input').addEventListener('keypress',e=>{if(e.key==='Enter')send()});
 </script>
 </body>
 </html>
