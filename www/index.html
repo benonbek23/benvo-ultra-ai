@@ -1,22 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BENVO ULTRA 34 - GOD BRAIN</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:linear-gradient(180deg,#0a1931,#061023);color:white;font-family:Arial;min-height:100vh}
+#intro{background:linear-gradient(135deg,#00f2ff11,#00ff8811);border-bottom:2px solid #00f2ff44;padding:12px;text-align:center}
+#intro h1{color:#00f2ff;font-size:22px;text-shadow:0 0 15px #00f2ff}
+#intro h2{color:#00ff88;font-size:13px;margin:6px 0}
+.badge{display:inline-block;background:#00f2ff22;border:1px solid #00f2ff;padding:4px 10px;border-radius:20px;font-size:10px;margin:3px;color:#00f2ff}
+.video-box{background:#112240;border:2px solid #00f2ff33;border-radius:15px;padding:10px;margin:10px auto;max-width:540px}
+.video-box h3{color:#00f2ff;font-size:14px;margin-bottom:6px}
+video{width:100%;border-radius:12px;border:2px solid #00f2ff55;max-height:240px;background:black}
+.story{font-size:12px;color:#ccc;line-height:1.6;text-align:left;margin-top:8px;background:#0a193144;padding:8px;border-radius:10px}
+.btn-small{padding:7px 12px;border-radius:20px;border:none;font-weight:bold;font-size:11px;margin:3px;cursor:pointer}
+#chat{height:38vh;overflow-y:auto;padding:10px;margin:10px;background:#112240;border-radius:15px;border:1px solid #00f2ff22}
+.msg{margin:8px;padding:11px;border-radius:15px;max-width:85%;font-size:13px;line-height:1.4}
+.user{background:linear-gradient(135deg,#00f2ff,#00ff88);color:black;margin-left:auto}
+.bot{background:#1e3a5f}
+#row{display:flex;gap:6px;padding:0 10px}
+#msgInput{flex:1;padding:13px;border-radius:25px;border:2px solid #00f2ff33;background:#0a1931;color:white;outline:none}
+#callBtn{flex:1;background:linear-gradient(135deg,#00ff88,#00f2ff);color:black;font-size:15px;padding:14px;border-radius:25px;border:none;font-weight:bold;cursor:pointer}
+#callBtn.active{background:linear-gradient(135deg,#ff0040,#ff6600);color:white;animation:pulse 1s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}}100%{transform:scale(1)}}
+#sendBtn{background:#00f2ff;color:black;padding:13px 16px;border-radius:25px;border:none;font-weight:bold;min-width:65px}
+#status{text-align:center;color:#00ff88;margin:8px;font-size:12px}
+</style>
+</head>
+<body>
+
 <div id="intro">
-<h1>🚀 BENVO ULTRA 34 - GOD BRAIN</h1>
-<h2>Created by Benon Katugunda 🇺🇬 | Maaya Lubimbiri, Mubende</h2>
-
-<!-- INTRO VIDEO - YOUR VIDEO HERE -->
-<video id="introVideo" controls autoplay muted loop playsinline style="width:100%;max-width:500px;border-radius:15px;margin:10px auto;display:block;border:2px solid #00f2ff;box-shadow:0 0 20px #00f2ff44">
-<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-Your browser no video
-</video>
-<div style="margin:5px">
-<button onclick="document.getElementById('introVideo').play()" style="background:#00f2ff;padding:6px 12px;border-radius:10px;border:none;font-size:12px">▶️ PLAY INTRO</button>
-<button onclick="document.getElementById('ytVideoIn').click()" style="background:#00ff88;padding:6px 12px;border-radius:10px;border:none;font-size:12px">📤 UPLOAD YOUR INTRO VIDEO</button>
-</div>
-
+<h1>🚀 BENVO ULTRA 34 — GOD BRAIN</h1>
+<h2>By Benon Katugunda 🇺🇬 | Maaya Lubimbiri, Kasambya, Mubende</h2>
 <div>
-<span class="badge">📍 Maaya Lubimbiri, Kasambya</span>
-<span class="badge">⚡ Groq 20B</span>
+<span class="badge">📍 Village to World</span>
+<span class="badge">⚡ Groq 20B Fastest</span>
 <span class="badge">📞 Infinite Call</span>
-<span class="badge">🎬 Intro Video</span>
+<span class="badge">🎬 Intro Videos</span>
 </div>
-<p>World's fastest village-built AI — Voice-to-Voice infinite call until you get tired.<br>Tap START INFINITE CALL below — no 2 sec cut!</p>
+
+<!-- VIDEO 1: HOW I MADE AI -->
+<div class="video-box">
+<h3>🎬 VIDEO 1: HOW I MADE THIS AI (My Story)</h3>
+<video id="vid1" controls playsinline poster="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500">
+<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+</video>
+<div style="margin-top:6px">
+<button class="btn-small" style="background:#00f2ff" onclick="playStory(1)">▶️ PLAY MY STORY (Voice)</button>
+<button class="btn-small" style="background:#00ff88" onclick="document.getElementById('file1').click()">📤 UPLOAD YOUR VIDEO 1</button>
+<input type="file" id="file1" accept="video/*" style="display:none">
 </div>
+<div class="story" id="story1">
+<b>How I Made Benvo Ultra 34:</b><br>
+1. I am Benon from Maaya Lubimbiri, a small village in Kasambya, Mubende, Uganda. No big lab, just my phone.<br>
+2. I used Vercel to host, Groq API (openai/gpt-oss-20b) for fastest brain in world, Tavily for live search, Web Speech API for voice.<br>
+3. I coded api/chat.js to stop hallucinations (no more Thomas More bug), memory system to remember last topic.<br>
+4. I built infinite call mode — mic stays open until YOU get tired, not 2 seconds cut.<br>
+5. Goal: Prove Ugandan village boy can build AI faster than ChatGPT. This is Benvo Ultra 34 — God Brain.
+</div>
+</div>
+
+<!-- VIDEO 2: HOW IT WORKS -->
+<div class="video-box">
+<h3>⚙️ VIDEO 2: HOW IT WORKS (Tech Flow)</h3>
+<video id="vid2" controls playsinline poster="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=500">
+<source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+</video>
+<div style="margin-top:6px">
+<button class="btn-small" style="background:#00f2ff" onclick="playStory(2)">▶️ PLAY HOW IT WORKS (Voice)</button>
+<button class="btn-small" style="background:#00ff88" onclick="document.getElementById('file2').click()">📤 UPLOAD YOUR VIDEO 2</button>
+<input type="file" id="file2" accept="video/*" style="display:none">
+</div>
+<div class="story" id="story2">
+<b>How Benvo Ultra Works:</b><br>
+🎤 You tap START INFINITE CALL → browser asks mic permission (navigator.mediaDevices.getUserMedia).<br>
+👂 SpeechRecognition (continuous=true) listens — no 2-sec cut, silence timer 1.4s auto-sends.<br>
+🧠 Text sent to /api/chat → Groq 20B answers in <1 sec + Tavily live search if needed.<br>
+🔊 Reply spoken via speechSynthesis → when speech ends, mic auto-restarts (restartMic loop).<br>
+♾️ Loop continues FOREVER until you tap END CALL. Chat history saved in localStorage.
+</div>
+</div>
+</div>
+
+<div id="chat"></div>
+<div id="row">
+<button id="callBtn">📞 START INFINITE CALL</button>
+<input id="msgInput" placeholder="Type or talk...">
+<button id="sendBtn">SEND</button>
+</div>
+<div id="status">Infinite call — goes until you get tired. Tap START.</div>
+
+<script>
+let chatHistory=JSON.parse(localStorage.getItem('benvo34_history')||'[]');
+let callActive=false,recognition;
+const chatDiv=document.getElementById('chat'),statusEl=document.getElementById('status'),inputEl=document.getElementById('msgInput'),callBtn=document.getElementById('callBtn');
+
+function render(){chatDiv.innerHTML='';chatHistory.forEach(m=>{let d=document.createElement('div');d.className='msg '+(m.role==='user'?'user':'bot');d.innerText=m.content;chatDiv.appendChild(d)});chatDiv.scrollTop=chatDiv.scrollHeight}
+render();
+function save(){localStorage.setItem('benvo34_history',JSON.stringify(chatHistory))}
+
+async function send(t){
+ if(!t.trim())return;
+ chatHistory.push({role:'user',content:t});save();render();inputEl.value='';statusEl.innerText='🧠 Thinking...';
+ try{
+  let r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:t,history:chatHistory.slice(-8)})});
+  let d=await r.json();
+  chatHistory.push({role:'assistant',content:d.reply});save();render();speak(d.reply);
+ }catch(e){statusEl.innerText='Error';if(callActive)restartMic();}
+}
+function speak(txt){
+ speechSynthesis.cancel();
+ let u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=0.95;
+ u.onstart=()=>{statusEl.innerText='🔊 Benvo speaking...';try{recognition.stop()}catch(e){}};
+ u.onend=()=>{if(callActive){statusEl.innerText='👂 Your turn - infinite call continues';restartMic();}};
+ speechSynthesis.speak(u);
+}
+function restartMic(){if(!callActive)return;setTimeout(()=>{try{recognition.start();statusEl.innerText='🎤 Mic ON - infinite until you tired!';}catch(e){setTimeout(restartMic,500)}},700);}
+
+function playStory(n){
+ let txt=document.getElementById('story'+n).innerText;
+ speechSynthesis.cancel();
+ let u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=0.95;
+ u.onstart=()=>{statusEl.innerText='🔊 Playing intro video story '+n+'...'};
+ u.onend=()=>{statusEl.innerText='Story ended. Tap START CALL';};
+ speechSynthesis.speak(u);
+ if(n==1) document.getElementById('vid1').play(); else document.getElementById('vid2').play();
+}
+
+// Upload custom videos
+document.getElementById('file1').onchange=(e)=>{let f=e.target.files[0];if(!f)return;let url=URL.createObjectURL(f);document.getElementById('vid1').src=url;document.getElementById('vid1').play();localStorage.setItem('benvo_vid1_name',f.name);statusEl.innerText='✅ Video 1 uploaded: '+f.name;};
+document.getElementById('file2').onchange=(e)=>{let f=e.target.files[0];if(!f)return;let url=URL.createObjectURL(f);document.getElementById('vid2').src=url;document.getElementById('vid2').play();localStorage.setItem('benvo_vid2_name',f.name);statusEl.innerText='✅ Video 2 uploaded: '+f.name;};
+
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){
+ recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;
+ let timer;
+ recognition.onresult=(e)=>{
+  clearTimeout(timer);let fin='',inter='';for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';else inter+=e.results[i][0].transcript;}
+  inputEl.value=fin+inter;statusEl.innerText='🎤 '+ (fin+inter).slice(-50);
+  timer=setTimeout(()=>{let s=(fin||inter).trim();if(s.length>1){try{recognition.stop()}catch(e){}inputEl.value='';send(s);}},1400);
+ };
+ recognition.onstart=()=>{statusEl.innerText='🎤 Infinite mic ON - talk long!';};
+ recognition.onend=()=>{if(callActive&&!speechSynthesis.speaking)restartMic();};
+ recognition.onerror=()=>{if(callActive)restartMic();};
+}
+
+callBtn.onclick=async()=>{
+ if(!callActive){
+  try{await navigator.mediaDevices.getUserMedia({audio:true});}catch(err){alert('Allow mic: Tap 🔒 icon → Microphone → Allow → Reload');return;}
+  callActive=true;callBtn.classList.add('active');callBtn.innerText='🔴 END CALL (when tired)';statusEl.innerText='📞 Infinite call started - goes until you tired!';try{recognition.start();}catch(e){restartMic();}
+ }else{
+  callActive=false;callBtn.classList.remove('active');callBtn.innerText='📞 START INFINITE CALL';statusEl.innerText='Call ended';try{recognition.stop();}catch(e){}speechSynthesis.cancel();
+ }
+};
+document.getElementById('sendBtn').onclick=()=>send(inputEl.value);
+inputEl.onkeypress=(e)=>{if(e.key==='Enter')send(e.target.value)};
+</script>
+</body>
+</html>
