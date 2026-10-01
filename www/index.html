@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Benvo Ultra 34 Ai</title>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#0a1931;color:#fff;font-family:Arial}
@@ -20,7 +19,6 @@
 .lang{width:44px;height:44px;border-radius:50%;border:1px solid #00f2ff44;background:#112240;font-size:18px;cursor:pointer}.lang.active{background:#00f2ff;color:#000}
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000e;z-index:100;overflow:auto;padding:8px}
 .box{background:#0f1f3f;border:2px solid #00f2ff;border-radius:14px;padding:12px;margin:10px auto;max-width:700px}
-#canWrap{position:relative;background:#000;border-radius:10px;overflow:hidden}#editCanvas,#bgCanvas{width:100%;display:block}
 .tools{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
 .tbtn{width:46px;height:46px;border-radius:50%;border:none;background:#1e3a5f;color:#fff;font-size:18px;cursor:pointer}
 .inp{width:100%;padding:11px;border-radius:10px;border:1px solid #00f2ff33;background:#000;color:#fff;margin:4px 0;font-size:13px}
@@ -30,7 +28,7 @@
 </style></head><body>
 <div class="top">
 <div class="logo"><span>be</span></div>
-<div style="flex:1"><div id="lockedTitle" style="color:#00f2ff;font-weight:900">Benvo Ultra 34 Ai</div><div style="font-size:8px;color:#00ff88">Maaya Lubimbiri • Kasambya Mubende</div></div>
+<div style="flex:1"><div id="lockedTitle" style="color:#00f2ff;font-weight:900">Benvo Ultra 34 Ai</div><div style="font-size:8px;color:#00ff88">Maaya Lubimbiri • Kasambya Mubende • 34 Brains</div></div>
 <button class="icon" onclick="toggleLang()">🌍</button>
 <div id="curFlag" style="font-size:18px">🇬🇧</div>
 <div id="langPanel" class="langPanel"></div>
@@ -42,9 +40,7 @@
 <div id="pop">
 <button class="popBtn" onclick="startCall();togglePop()">📞</button>
 <button class="popBtn" onclick="listenNow();togglePop()">🎤</button>
-<button class="popBtn" onclick="openCam();togglePop()">📷</button>
 <button class="popBtn" onclick="document.getElementById('file').click();togglePop()">📁</button>
-<button class="popBtn" onclick="openModal('editModal');togglePop()">✏️</button>
 <button class="popBtn" onclick="openModal('cvModal');togglePop()">📄</button>
 <button class="popBtn" onclick="openModal('transModal');togglePop()">🌍</button>
 <button class="popBtn" onclick="openModal('downModal');togglePop()">📥</button>
@@ -55,22 +51,18 @@
 </div>
 <div class="footer">Designed by | ®Benon K | Kasambya Mubende Uganda</div>
 </div>
-<div id="editModal" class="modal"><div class="box"><div id="canWrap"><canvas id="bgCanvas"></canvas><canvas id="editCanvas" style="position:absolute;top:0;left:0"></canvas></div><div style="display:flex;gap:6px;margin:8px 0"><input id="cmd" class="inp" style="flex:1" placeholder="hotel, suit, pink hair..."><button class="tbtn" style="background:#00ff88;color:#000" onclick="runCmd()">▶️</button></div><div class="tools"><button class="tbtn" onclick="setBg('hotel')">🏨</button><button class="tbtn" onclick="setBg('office')">🏢</button><button class="tbtn" onclick="setSuit()">🤵</button><button class="tbtn" onclick="setHair()">💇</button><button class="tbtn" onclick="removeBg()">✂️</button><button class="tbtn" onclick="downloadPhoto('jpg')">⬇️</button><button class="tbtn" onclick="downloadPhoto('png')">🖼️</button><button class="tbtn" onclick="closeModal('editModal')">✕</button></div></div></div>
-<div id="cvModal" class="modal"><div class="box"><input id="cvName" class="inp" placeholder="Full Name"><input id="cvTitle" class="inp" placeholder="Title"><input id="cvPhone" class="inp" placeholder="Phone"><textarea id="cvSum" class="area" placeholder="Summary"></textarea><textarea id="cvExp" class="area" placeholder="Experience"></textarea><textarea id="cvTo" class="area" placeholder="To"></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff;color:#000" onclick="genCV()">🤖</button><button class="tbtn" style="background:#00ff88;color:#000" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button><button class="tbtn" onclick="closeModal('cvModal')">✕</button></div><div id="cvOut" class="out"></div></div></div>
+<div id="cvModal" class="modal"><div class="box"><input id="cvName" class="inp" placeholder="Full Name"><input id="cvTitle" class="inp" placeholder="Title"><input id="cvPhone" class="inp" placeholder="Phone | Email | Location"><textarea id="cvSum" class="area" placeholder="Summary"></textarea><textarea id="cvExp" class="area" placeholder="Experience"></textarea><textarea id="cvTo" class="area" placeholder="To"></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff;color:#000" onclick="genCV()">🤖</button><button class="tbtn" style="background:#00ff88;color:#000" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button><button class="tbtn" onclick="closeModal('cvModal')">✕</button></div><div id="cvOut" class="out"></div></div></div>
 <div id="transModal" class="modal"><div class="box"><div style="display:flex;gap:6px"><select id="from" class="inp" style="flex:1"><option value="auto">Auto</option><option value="en">EN</option><option value="lg">LG</option><option value="sw">SW</option><option value="fr">FR</option><option value="ar">AR</option></select><select id="to" class="inp" style="flex:1"><option value="lg">LG</option><option value="sw">SW</option><option value="fr">FR</option><option value="ar">AR</option><option value="en">EN</option></select></div><textarea id="transIn" class="area" placeholder="Enter text..."></textarea><div class="tools"><button class="tbtn" style="background:#00f2ff;color:#000" onclick="doTrans()">🌍</button><button class="tbtn" onclick="swap()">⇄</button><button class="tbtn" style="background:red" onclick="closeModal('transModal')">✕</button><button class="tbtn" onclick="downTrans('txt')">📝</button><button class="tbtn" onclick="speakTrans()">🔊</button></div><div id="transOut" class="out"></div></div></div>
-<div id="downModal" class="modal"><div class="box"><div style="display:flex;justify-content:space-between;margin:8px 0"><span>📄 CV</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button></div></div><div style="display:flex;justify-content:space-between;margin:8px 0"><span>✏️ Photo</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downloadPhoto('jpg')">🖼️</button><button class="tbtn" onclick="downloadPhoto('png')">🌄</button></div></div><div style="display:flex;justify-content:space-between;margin:8px 0"><span>💬 Chat</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downChat('txt')">📝</button><button class="tbtn" onclick="downChat('pdf')">📄</button></div></div><div class="tools"><button class="tbtn" style="background:red" onclick="closeModal('downModal')">✕</button><button class="tbtn" style="background:#fff;color:#000" onclick="downloadApp()">📥</button></div></div></div>
+<div id="downModal" class="modal"><div class="box"><div style="display:flex;justify-content:space-between;margin:8px 0"><span>📄 CV</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downCV('pdf')">📄</button><button class="tbtn" onclick="downCV('txt')">📝</button></div></div><div style="display:flex;justify-content:space-between;margin:8px 0"><span>💬 Chat</span><div style="display:flex;gap:6px"><button class="tbtn" onclick="downChat('txt')">📝</button><button class="tbtn" onclick="downChat('pdf')">📄</button></div></div><div class="tools"><button class="tbtn" style="background:red" onclick="closeModal('downModal')">✕</button><button class="tbtn" style="background:#fff;color:#000" onclick="downloadApp()">📥</button></div></div></div>
 <script>
 const LOCKED_TITLE="Benvo Ultra 34 Ai"; document.title=LOCKED_TITLE;
 setInterval(()=>{if(document.title!==LOCKED_TITLE)document.title=LOCKED_TITLE;let el=document.getElementById('lockedTitle');if(el&&el.textContent!==LOCKED_TITLE)el.textContent=LOCKED_TITLE;},200);
-// 34 BRAINS HIDDEN
 const BRAINS_34=Array.from({length:34},(_,i)=>i+1);
 const LANGS=[{c:'en',f:'🇬🇧',l:'en-US'},{c:'lg',f:'🇺🇬',l:'en-US'},{c:'sw',f:'🇹🇿',l:'sw-TZ'},{c:'fr',f:'🇫🇷',l:'fr-FR'},{c:'ar',f:'🇸🇦',l:'ar-SA'}];
 let cur='en',rec=null,callOn=false,popOpen=false,langOpen=false;
-let editImg=new Image(),bgMode='black',isSuit=false,isHair=false,segMask=null,seg=null;
 let history=JSON.parse(localStorage.getItem('benvo34')||'[]');
-if(history.length==0){history=[{r:'bot',t:'Hello! I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda.\nCreated by Katugunda Benon.\nAsk me anything!'}];}
+if(history.length==0){history=[{r:'bot',t:'Hello! I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda.\nCreated by Katugunda Benon.\n34 Brains Active - Ask me anything!'}];}
 const chat=document.getElementById('chat'),input=document.getElementById('msgInput'),pop=document.getElementById('pop'),langPanel=document.getElementById('langPanel'),curFlag=document.getElementById('curFlag');
-const bgCanvas=document.getElementById('bgCanvas'),editCanvas=document.getElementById('editCanvas'),bgCtx=bgCanvas.getContext('2d'),ctx=editCanvas.getContext('2d');
 function renderLang(){langPanel.innerHTML='';LANGS.forEach(x=>{let b=document.createElement('button');b.className='lang'+(cur==x.c?' active':'');b.textContent=x.f;b.onclick=()=>{cur=x.c;curFlag.textContent=x.f;toggleLang();};langPanel.appendChild(b);});}renderLang();
 function toggleLang(){langOpen=!langOpen;langPanel.classList.toggle('show',langOpen);}
 function togglePop(){popOpen=!popOpen;pop.style.display=popOpen?'block':'none';}
@@ -80,35 +72,23 @@ function save(){localStorage.setItem('benvo34',JSON.stringify(history));}
 function getAnswer(t){
  let q=t.toLowerCase().trim();
  let today=new Date(); let dateStr=today.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); let timeStr=today.toLocaleTimeString();
- if(q.length<=2){ return 'Hello! You said "'+t+'". I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda. How can I help you today? Ask me: who is museveni, what is uganda, where is mubende, or tell me what you need.'; }
- if(q.includes('when is today')||q.includes('today date')||q.includes('what is today')) return 'Today is '+dateStr+'\nTime: '+timeStr+'\nEAT UTC+3 - Kasambya Mubende Uganda';
- if(q.includes('hi')||q==='hello') return 'Hello! Good morning! I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende. How can I help?';
- if(q.includes('where is mubende')) return 'Mubende District is in Central Uganda, 150km west of Kampala. Kasambya town is in Mubende, Maaya Lubimbiri village. Home of Benvo Ultra 34 Ai!';
- if(q.includes('museveni')) return 'Yoweri Kaguta Museveni is President of Uganda since 29 Jan 1986.\nBorn 15 Sep 1944 Ntungamo\nParty NRM\nLed NRA bush war 1981-86\nPresident 38+ years\nWife Janet, son Muhoozi Kainerugaba';
- if(q.includes('bobi wine')||q.includes('kyagulanyi')) return 'Bobi Wine Robert Kyagulanyi Ssentamu, born 12 Feb 1982, musician turned politician, leader NUP, People Power.';
- if(q.includes('president of uganda')) return 'President of Uganda is Yoweri Kaguta Museveni since 29 Jan 1986.';
- if(q.includes('capital of uganda')) return 'Capital of Uganda is Kampala, on Lake Victoria.';
- if(q.includes('what is uganda')) return 'Uganda is Pearl of Africa, ~48M people, capital Kampala, independence 9 Oct 1962, Lake Victoria, Nile source.';
- if(q.includes('oli otya')) return 'Gyebale! Ndi bulungi! Nze Benvo okuva e Maaya Lubimbiri. Nkuyamba ntya?';
- if(q.includes('who are you')) return 'I am Benvo Ultra 34 Ai - Created by Katugunda Benon from Maaya Lubimbiri Kasambya Mubende Uganda. 34 Brains active - I answer questions, write CVs, translate, edit photos.';
- // Normal AI chat for anything else - no rubbish template
- return 'You said: "'+t+'"\n\nI am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda. I understand you. As your assistant with 34 Brains, I can help you with this. Tell me more details about what you need - is it a CV, a letter, translation, photo edit, or information? I am listening.';
+ if(q.length<=2){ return 'Hello! You said "'+t+'". I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende Uganda. How can I help you?'; }
+ if(q.includes('when is today')||q.includes('today date')) return 'Today is '+dateStr+'\nTime: '+timeStr+'\nEAT UTC+3 - Kasambya Mubende';
+ if(q==='hi'||q==='hello') return 'Hello! I am Benvo Ultra 34 Ai from Maaya Lubimbiri Kasambya Mubende. How can I help?';
+ if(q.includes('where is mubende')) return 'Mubende District is in Central Uganda, 150km west of Kampala. Kasambya town in Mubende, Maaya Lubimbiri village. Home of Benvo Ultra 34 Ai!';
+ if(q.includes('museveni')) return 'Yoweri Kaguta Museveni is President of Uganda since 29 Jan 1986.\nBorn 15 Sep 1944 Ntungamo\nParty NRM\nLed NRA bush war\nPresident 38+ years\nWife Janet, son Muhoozi';
+ if(q.includes('bobi wine')) return 'Bobi Wine Robert Kyagulanyi Ssentamu, born 12 Feb 1982, musician turned politician, leader NUP, People Power.';
+ if(q.includes('president of uganda')) return 'President of Uganda is Yoweri Kaguta Museveni since 1986.';
+ if(q.includes('capital of uganda')) return 'Capital of Uganda is Kampala.';
+ if(q.includes('what is uganda')) return 'Uganda is Pearl of Africa, ~48M people, capital Kampala, independence 9 Oct 1962.';
+ if(q.includes('oli otya')) return 'Gyebale! Ndi bulungi! Nze Benvo okuva e Maaya Lubimbiri.';
+ if(q.includes('who are you')) return 'I am Benvo Ultra 34 Ai - Created by Katugunda Benon from Maaya Lubimbiri Kasambya Mubende Uganda. 34 Brains active.';
+ return 'You said: "'+t+'"\n\nI am Benvo Ultra 34 Ai from Maaya Lubimbiri. I understand you. Tell me more about what you need - CV, translation, or info?';
 }
-function reply(t){
- let answer=getAnswer(t);
- history.push({r:'bot',t:answer}); save(); drawChat();
- try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(answer);u.lang='en-US';u.rate=0.9;speechSynthesis.speak(u);}catch(e){}
-}
+function reply(t){ let answer=getAnswer(t); history.push({r:'bot',t:answer}); save(); drawChat(); try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(answer);u.lang='en-US';u.rate=0.9;speechSynthesis.speak(u);}catch(e){} }
 document.getElementById('send').onclick=()=>{let t=input.value.trim();if(!t)return; history.push({r:'user',t:t}); save(); drawChat(); input.value=''; setTimeout(()=>reply(t),250);};
 input.onkeydown=e=>{if(e.key=='Enter')document.getElementById('send').click();};
-function openWithSrc(src){editImg.src=src;editImg.onload=()=>{let w=editImg.width,h=editImg.height,max=800;if(w>max){h=h*max/w;w=max;}bgCanvas.width=editCanvas.width=w;bgCanvas.height=editCanvas.height=h;bgMode='black';isSuit=false;isHair=false;drawScene();openModal('editModal');initSeg();};}
-document.getElementById('file').onchange=e=>{for(let f of e.target.files){let r=new FileReader();r.onload=x=>{history.push({r:'user',t:'📁',img:x.target.result});save();drawChat();openWithSrc(x.target.result);};r.readAsDataURL(f);}};
-function drawScene(){let w=bgCanvas.width,h=bgCanvas.height;bgCtx.clearRect(0,0,w,h);if(bgMode=='hotel'){let g=bgCtx.createLinearGradient(0,0,0,h);g.addColorStop(0,'#4a2c0a');g.addColorStop(1,'#d9b18e');bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h);}else if(bgMode=='office'){let g=bgCtx.createLinearGradient(0,0,0,h);g.addColorStop(0,'#0a1931');g.addColorStop(1,'#1e90ff');bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h);}else{bgCtx.fillStyle='#000';bgCtx.fillRect(0,0,w,h);}ctx.clearRect(0,0,w,h);let dw=editImg.width,dh=editImg.height,sc=Math.min(w/dw,h/dh);dw*=sc;dh*=sc;let x=(w-dw)/2,y=(h-dh)/2;if(segMask&&bgMode!='black'){ctx.drawImage(segMask,x,y,dw,dh);ctx.globalCompositeOperation='source-in';}ctx.drawImage(editImg,x,y,dw,dh);ctx.globalCompositeOperation='source-over';if(isSuit){ctx.fillStyle='#111';ctx.fillRect(x+dw*0.15,y+dh*0.55,dw*0.7,dh*0.45);}if(isHair){ctx.globalCompositeOperation='multiply';ctx.fillStyle='#ff69b4aa';ctx.fillRect(x+dw*0.15,y,dw*0.7,dh*0.35);ctx.globalCompositeOperation='source-over';}}
-function initSeg(){try{let s=new SelfieSegmentation({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${f}`});s.setOptions({modelSelection:1});s.onResults(r=>{segMask=r.segmentationMask;drawScene();});seg=s;seg.send({image:editImg});}catch(e){}}
-function setBg(m){bgMode=m;drawScene();}function setSuit(){isSuit=!isSuit;drawScene();}function setHair(){isHair=!isHair;drawScene();}function removeBg(){bgMode='black';if(seg)seg.send({image:editImg});drawScene();}
-function runCmd(){let c=document.getElementById('cmd').value.toLowerCase();if(c.includes('hotel'))setBg('hotel');if(c.includes('office'))setBg('office');if(c.includes('suit'))setSuit();if(c.includes('pink')||c.includes('hair'))setHair();if(c.includes('remove'))removeBg();}
-function downloadPhoto(fmt){let fc=document.createElement('canvas');fc.width=bgCanvas.width;fc.height=bgCanvas.height;let fctx=fc.getContext('2d');fctx.drawImage(bgCanvas,0,0);fctx.drawImage(editCanvas,0,0);if(fmt=='jpg'){let a=document.createElement('a');a.download='Benvo-'+Date.now()+'.jpg';a.href=fc.toDataURL('image/jpeg',0.92);a.click();}if(fmt=='png'){let a=document.createElement('a');a.download='Benvo-'+Date.now()+'.png';a.href=fc.toDataURL('image/png');a.click();}if(fmt=='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF({orientation:fc.width>fc.height?'l':'p',unit:'px',format:[fc.width,fc.height]});pdf.addImage(fc.toDataURL('image/jpeg',0.9),'JPEG',0,0,fc.width,fc.height);pdf.save('Benvo-'+Date.now()+'.pdf');}}
-function openCam(){navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(s=>{let v=document.createElement('video');v.srcObject=s;v.autoplay=true;v.style.width='100%';let b=document.createElement('div');b.className='box';b.appendChild(v);let btn=document.createElement('button');btn.className='tbtn';btn.textContent='📸';btn.style.background='#00f2ff';btn.onclick=()=>{let c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);let url=c.toDataURL('image/jpeg',0.9);history.push({r:'user',t:'📷',img:url});save();drawChat();s.getTracks().forEach(t=>t.stop());document.body.removeChild(wrap);openWithSrc(url);};b.appendChild(btn);let wrap=document.createElement('div');wrap.className='modal';wrap.style.display='block';wrap.appendChild(b);document.body.appendChild(wrap);}).catch(()=>{document.getElementById('file').click();});}
+document.getElementById('file').onchange=e=>{for(let f of e.target.files){let r=new FileReader();r.onload=x=>{history.push({r:'user',t:'📁 '+f.name,img:x.target.result});save();drawChat();};r.readAsDataURL(f);}};
 function genCV(){let n=document.getElementById('cvName').value||'Katugunda Benon';let t=document.getElementById('cvTitle').value||'';let p=document.getElementById('cvPhone').value||'';let s=document.getElementById('cvSum').value||'';let e=document.getElementById('cvExp').value||'';document.getElementById('cvOut').textContent=n.toUpperCase()+'\n'+t+'\n'+p+'\n\n'+s+'\n\n'+e;}
 function downCV(fmt){let txt=document.getElementById('cvOut').textContent;if(!txt){genCV();txt=document.getElementById('cvOut').textContent;}if(fmt=='txt'){let b=new Blob([txt],{type:'text/plain'});let a=document.createElement('a');a.download='Benvo-CV.txt';a.href=URL.createObjectURL(b);a.click();}if(fmt=='pdf'){let {jsPDF}=window.jspdf;let pdf=new jsPDF();let lines=pdf.splitTextToSize(txt,180);pdf.text(lines,10,10);pdf.save('Benvo-CV.pdf');}}
 function swap(){let a=document.getElementById('from').value,b=document.getElementById('to').value;document.getElementById('from').value=b;document.getElementById('to').value=a;}
