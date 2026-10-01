@@ -23,7 +23,7 @@ button{padding:12px 20px;border-radius:25px;border:none;background:#00F2FF;font-
 <div style="font-size:12px">God Ultra 34 Brain | By Benon Katugunda | Maaya Lubimbiri Kasambya Mubende Uganda</div>
 </header>
 <div id="chat">
-<div class="msg bot">Hello! I am Benvo ultra Ai - God Ultra 34 Brain - Created by Benon Katugunda from Maaya Lubimbiri Kasambya Mubende Uganda - I have 34 Brains ready! Ask me anything! 🧠</div>
+<div class="msg bot">Hello! I am Benvo ultra Ai - God Ultra 34 Brain - Created by Benon Katugunda from Maaya Lubimbiri Kasambya Mubende Uganda - I have 34 Brains ready! Ask me anything!</div>
 </div>
 <div id="inputArea">
 <input id="input" placeholder="Ask Benvo ultra AI...">
@@ -38,14 +38,14 @@ async function send(){
  chat.innerHTML+=`<div class="msg user">${text}</div>`;
  input.value='';
  const id=Date.now();
- chat.innerHTML+=`<div class="msg bot" id="${id}"><div class="brain">🧠 Brain Thinking...</div>Thinking...</div>`;
+ chat.innerHTML+=`<div class="msg bot" id="${id}"><div class="brain">Brain Thinking...</div>Thinking...</div>`;
  chat.scrollTop=chat.scrollHeight;
  try{
   const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});
   const data=await res.json();
-  document.getElementById(id).innerHTML=`<div class="brain">🧠 Brain Answer</div>${data.reply}`;
+  document.getElementById(id).innerHTML=`<div class="brain">Brain Answer</div>${data.reply}`;
  }catch(e){
-  document.getElementById(id).innerHTML=`Error: ${e.message} - Check GROQ_API_KEY in Vercel`;
+  document.getElementById(id).innerHTML=`Error: ${e.message}`;
  }
  chat.scrollTop=chat.scrollHeight;
 }
