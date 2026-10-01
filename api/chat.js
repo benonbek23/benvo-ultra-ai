@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-20b",
         messages: [
           { role: "system", content: "You are Benvo Ultra AI, God Ultra 34 Brain, created by Benon Katugunda from Maaya Lubimbiri Kasambya Mubende Uganda. You have 34 specialized brains. Always be helpful, smart, short, friendly. Mention which brain used." },
           { role: "user", content: message }
